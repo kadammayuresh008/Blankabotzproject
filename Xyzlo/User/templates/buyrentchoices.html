@@ -1,12 +1,15 @@
 {% extends 'base.html' %}
 
 {% block title%}
-login
+buyrentchoices
 {% endblock title %}
 {% block content %}
 
 <br>
 <div class="container">
+    <div class="text-right">
+        <a href="{% url 'buyrent' %}" class="btn btn-primary">Choose category</a>
+    </div>
     <h2>{{product.0.product_category}}</h2>
 <div class="row">
 {% for i in product %}

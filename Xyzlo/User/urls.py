@@ -13,4 +13,5 @@ urlpatterns = [
     path('buyrent/', views.buyrent, name="buyrent"),
     path('post', views.post , name="post"),
     path('buyrent/buyrentchoice/', views.buyrentchoice, name="buyrentchoice"),
+    path('userpost/',views.userpost ,name="userpost"),
 ]

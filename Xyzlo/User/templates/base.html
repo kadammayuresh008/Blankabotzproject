@@ -32,10 +32,15 @@ text-decoration: none;
 }
 
 
-/* input[type='file']{
-  color:blue;
-  display:none;
-} */
+.custom-select {
+  position: relative;
+  font-family: Arial;
+}
+
+.select-selected {
+  background-color: Blue;
+}
+
 
 
 #output_image
@@ -92,6 +97,9 @@ text-decoration: none;
         </ul>
         
         <ul class="navbar-nav ml-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="{% url 'userpost' %}">{{user.name}}</a>
+          </li>
           <li class="nav-item active">
             <a class="nav-link" href="{% url 'handlelogout' %}">Logout</a>
           </li>

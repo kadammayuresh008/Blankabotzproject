@@ -75,7 +75,7 @@ class Account(AbstractBaseUser):
 
 
 class Product(models.Model):
-    pro_email = models.ForeignKey(Account , on_delete=models.CASCADE,default="")
+    pro_email = models.ForeignKey(Account, on_delete=models.CASCADE,default="")
     product_id = models.AutoField
     product_image = models.ImageField(upload_to='product_images')
     product_name = models.CharField(verbose_name="product_name", max_length=70)

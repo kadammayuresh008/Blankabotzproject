@@ -48,6 +48,7 @@ def home(request):
     # else:
     return render(request, "home.html")
 
+@login_required
 def about(request):
     # if request.user.is_authenticated:
     #     return redirect("signup")
@@ -70,15 +71,17 @@ def handlelogin(request):
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
     return HttpResponse('handlelogin')
 
+
 # logout function 
 def handlelogout(request):
     logout(request)
     messages.success(request, "Logged out successfully.")
     return render(request, "logout.html")
 
-
+@login_required
 def addpost(request):
     return render(request, "postadd.html")
+
 
 def post(request):
     if request.method == 'POST':
@@ -89,8 +92,8 @@ def post(request):
         product_location = request.POST.get('location')
         product_image = request.POST.get('image')
 
-        # print(product_name,product_price,product_category,product_description,
-        # product_location,product_image)
+        print(product_name,product_price,product_category,product_description,
+        product_location,product_image)
 
         if(bool(re.search(r'\d', product_name))):
             messages.error(request, "Name should not contain digits.")
@@ -117,6 +120,7 @@ def post(request):
     
     return HttpResponse('postadded.')
 
+@login_required
 def buyrent(request):
     products = Product.objects.all()
     choices=[]
@@ -142,4 +146,8 @@ def buyrentchoice(request):
         return HttpResponseRedirect(request.META.get('HTTP_REFERER')) 
 
 
-    
+def userpost(request):
+    # print(request.user.name)
+    products = Product.objects.filter(pro_email=request.user)
+    parameter = {'product':products}
+    return render(request, "userpost.html",parameter)

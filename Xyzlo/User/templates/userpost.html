@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title%}
+userpost
+{% endblock title %}
+{% block content %}
+<h1>Your Post</h1>
+<!-- <tr>
+  <th>Select Item</th>
+  <th>Product Image</th>
+  <th>Product Name</th>
+  <th>Product Price</th>
+  <th>Product Category</th>
+</tr>
+<table> -->
+{% for i in product %}
+ <div class="container">
+   <!-- <tr>
+     <td><input type="checkbox" id="vehicle1" name="vehicle1" value="Bike"></td>
+     <td><img src="/media/{{i.product_image}}" class="rounded" alt="Image not found" style="height: 5rem;width: 5rem;"></td>
+     <td> {{i.product_name}}</td>
+     <td>{{i.product_price}}</td>
+     <td>{{i.product_category}}</td>
+   </tr> -->
+
+    <div class="row">
+    <div class="col-sm">
+        <img src="/media/{{i.product_image}}" class="rounded" alt="Image not found" style="height: 5rem;width: 5rem;">
+      </div>
+      <div class="col-sm">
+        {{i.product_name}}
+      </div>
+      <div class="col-sm">
+        {{i.product_price}}
+      </div>
+      <div class="col-sm">
+        {{i.product_category}}
+      </div>
+    </div> 
+   </div>
+{% endfor %}
+<!-- </table> -->
+{% endblock content %}
