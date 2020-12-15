@@ -1,10 +1,10 @@
 from django.db import models
-
-
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from phonenumber_field.modelfields import PhoneNumberField
 
 # Create your models here.
+
+
 
 class AccountManager(BaseUserManager):
     def create_user(self, email, name, address, bdate, pnumber, password=None):
@@ -74,6 +74,20 @@ class Account(AbstractBaseUser):
     
 
 
+class Product(models.Model):
+    pro_email = models.ForeignKey(Account , on_delete=models.CASCADE,default="")
+    product_id = models.AutoField
+    product_image = models.ImageField(upload_to='product_images')
+    product_name = models.CharField(verbose_name="product_name", max_length=70)
+    product_price = models.IntegerField(verbose_name="product_price")
+    product_description = models.CharField(verbose_name="product_deascription", max_length=500)
+    product_category = models.CharField(verbose_name="product_category", max_length=70)
+    product_location = models.CharField(verbose_name="product_location", max_length=500)
+    
+
+
+    def __str__(self):
+        return str(self.product_name)
 
 
 

@@ -23,11 +23,41 @@ text-decoration: none;
 a:active {
 text-decoration: none;
 }
+
+#wrapper
+{
+ text-align:center;
+ margin:20 auto;
+ padding:20px;
+}
+
+
+/* input[type='file']{
+  color:blue;
+  display:none;
+} */
+
+
+#output_image
+{
+ max-width:300px;
+ border: 1px solid black;
+ border-radius: 20px;
+}
       </style>
-  </head>
-  <body>
-    <script>
-      var x = document.getElementById("demo");
+      <script type='text/javascript'>
+        function preview_image(event) 
+        {
+         var reader = new FileReader();
+         reader.onload = function()
+         {
+          var output = document.getElementById('output_image');
+          output.src = reader.result;
+         }
+         reader.readAsDataURL(event.target.files[0]);
+        }
+
+        var x = document.getElementById("demo");
       
       function getLocation() {
         if (navigator.geolocation) {
@@ -41,7 +71,10 @@ text-decoration: none;
         x.innerHTML = "Latitude: " + position.coords.latitude + 
         "<br>Longitude: " + position.coords.longitude;
       }
-      </script>
+        </script>
+  </head>
+  <body>
+
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <a class="navbar-brand" href="#">Xyzlo</a>
       <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
