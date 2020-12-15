@@ -4,40 +4,55 @@
 userpost
 {% endblock title %}
 {% block content %}
+<div class="container">
 <h1>Your Post</h1>
-<!-- <tr>
-  <th>Select Item</th>
-  <th>Product Image</th>
-  <th>Product Name</th>
-  <th>Product Price</th>
-  <th>Product Category</th>
-</tr>
-<table> -->
+<br>
+<div class="row">
+  <div class="col-sm-1">
+  </div>
+<div class="col-sm-3">
+    <h4>Product Image</h4>
+  </div>
+  <div class="col-sm-2">
+    <h4>Product Name</h4>
+  </div>
+  <div class="col-sm-2">
+    <h4>Product Price</h4>
+  </div>
+  <div class="col-sm-2">
+    <h4>Product Category</h4>
+  </div>
+</div> 
+<form action="deletepost/" method="POST" autocomplete="off">
+  {% csrf_token %}
+  {% if product %}
 {% for i in product %}
- <div class="container">
-   <!-- <tr>
-     <td><input type="checkbox" id="vehicle1" name="vehicle1" value="Bike"></td>
-     <td><img src="/media/{{i.product_image}}" class="rounded" alt="Image not found" style="height: 5rem;width: 5rem;"></td>
-     <td> {{i.product_name}}</td>
-     <td>{{i.product_price}}</td>
-     <td>{{i.product_category}}</td>
-   </tr> -->
-
     <div class="row">
-    <div class="col-sm">
+      <div class="col-sm-1">
+        <input type="checkbox" name="checkbox" id="option{{i.product_id}}" value="{{i.product_id}}">
+      </div>
+    <div class="col-sm-3">
         <img src="/media/{{i.product_image}}" class="rounded" alt="Image not found" style="height: 5rem;width: 5rem;">
       </div>
-      <div class="col-sm">
+      <div class="col-sm-2">
         {{i.product_name}}
       </div>
-      <div class="col-sm">
-        {{i.product_price}}
+      <div class="col-sm-2">
+        <b>Rs. </b>{{i.product_price}}
       </div>
-      <div class="col-sm">
+      <div class="col-sm-2">
         {{i.product_category}}
       </div>
+      <div>
+        <a class="btn btn-primary" href="{% url 'productDetails' %}">View Post</a>
+      </div>
     </div> 
-   </div>
 {% endfor %}
-<!-- </table> -->
+<br>
+<div class="form-group text-center">
+  <button type="submit" class="btn" style="background-color:darkred;">Delete Post</button>
+    </div>
+    {% endif %}
+</form>
+</div>
 {% endblock content %}

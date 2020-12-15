@@ -14,4 +14,6 @@ urlpatterns = [
     path('post', views.post , name="post"),
     path('buyrent/buyrentchoice/', views.buyrentchoice, name="buyrentchoice"),
     path('userpost/',views.userpost ,name="userpost"),
+    path('userpost/deletepost/',views.deletepost ,name="deletepost"),
+    path('productdetails/',views.productDetails, name="productDetails"),
 ]

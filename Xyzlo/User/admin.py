@@ -9,7 +9,7 @@ class AccountA(admin.ModelAdmin):
 
 
 class ProductA(admin.ModelAdmin):
-    list_display = ('pro_email', 'product_name', 'product_price', 'product_category')
+    list_display = ('product_id', 'product_name', 'product_price', 'product_category')
     list_filter = ('pro_email', 'product_price', 'product_category', )
 
 

@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from phonenumber_field.modelfields import PhoneNumberField
+import uuid
 
 # Create your models here.
 
@@ -76,7 +77,7 @@ class Account(AbstractBaseUser):
 
 class Product(models.Model):
     pro_email = models.ForeignKey(Account, on_delete=models.CASCADE,default="")
-    product_id = models.AutoField
+    product_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False ,unique=True)
     product_image = models.ImageField(upload_to='product_images')
     product_name = models.CharField(verbose_name="product_name", max_length=70)
     product_price = models.IntegerField(verbose_name="product_price")

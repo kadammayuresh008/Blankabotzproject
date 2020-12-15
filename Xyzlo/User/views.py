@@ -147,7 +147,25 @@ def buyrentchoice(request):
 
 
 def userpost(request):
-    # print(request.user.name)
     products = Product.objects.filter(pro_email=request.user)
     parameter = {'product':products}
     return render(request, "userpost.html",parameter)
+
+
+def deletepost(request):
+    if request.method == 'POST':
+        ans= request.POST.getlist('checkbox')
+        if(len(ans)>0):
+            while(len(ans) > 0):
+                x=ans[0]
+                ans.pop(0)
+                Product.objects.filter(product_id=x).delete()
+            messages.success(request, "Product deleted successfully.")
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+        else:
+            messages.error(request, "Product not selected")
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    return HttpResponse('Delete post')
+    
+def productDetails(request):
+    return render(request, "productdetails.html")
