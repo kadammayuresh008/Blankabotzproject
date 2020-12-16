@@ -51,6 +51,22 @@ text-decoration: none;
 }
       </style>
       <script type='text/javascript'>
+
+
+        function getLocation() {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(showPosition);
+        } else { 
+          x.innerHTML = "Geolocation is not supported by this browser.";
+        }
+      }
+      
+      function showPosition(position) {
+        x.innerHTML = "Latitude: " + position.coords.latitude + 
+        "<br>Longitude: " + position.coords.longitude;
+      }
+
+
         function preview_image(event) 
         {
          var reader = new FileReader();
@@ -64,18 +80,7 @@ text-decoration: none;
 
         var x = document.getElementById("demo");
       
-      function getLocation() {
-        if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(showPosition);
-        } else { 
-          x.innerHTML = "Geolocation is not supported by this browser.";
-        }
-      }
       
-      function showPosition(position) {
-        x.innerHTML = "Latitude: " + position.coords.latitude + 
-        "<br>Longitude: " + position.coords.longitude;
-      }
         </script>
   </head>
   <body>
@@ -123,7 +128,7 @@ text-decoration: none;
     {% if message.tags %} 
     <div class="{{ message.tags }}">
     {% endif %}
-        {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}
+        {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}{% endif %}
         {{ message }}
       </div>
     {% endfor %}

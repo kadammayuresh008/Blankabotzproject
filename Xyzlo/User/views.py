@@ -167,5 +167,15 @@ def deletepost(request):
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
     return HttpResponse('Delete post')
     
-def productDetails(request):
-    return render(request, "productdetails.html")
+def productDetails(request,product_id):
+    products = Product.objects.filter(product_id=product_id)
+    parameter = {'product':products}
+    return render(request, "productdetails.html",parameter)
+
+
+def deletepost(request,product_id):
+    Product.objects.filter(product_id=product_id).delete()
+    products = Product.objects.filter(pro_email=request.user)
+    parameter = {'product':products}
+    messages.success(request, "Product deleted successfully.")
+    return render(request, "userpost.html",parameter)

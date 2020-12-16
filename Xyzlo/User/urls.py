@@ -15,5 +15,6 @@ urlpatterns = [
     path('buyrent/buyrentchoice/', views.buyrentchoice, name="buyrentchoice"),
     path('userpost/',views.userpost ,name="userpost"),
     path('userpost/deletepost/',views.deletepost ,name="deletepost"),
-    path('productdetails/',views.productDetails, name="productDetails"),
+    path('productdetails/<product_id>',views.productDetails, name="productDetails"),
+    path('deletepost/<product_id>',views.deletepost, name="deletepost"),
 ]

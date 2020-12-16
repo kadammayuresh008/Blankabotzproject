@@ -49,7 +49,7 @@ userpost
         {{i.product_category}}
       </td>
       <td class="col-2">
-        <a class="btn btn-primary" href="{% url 'productDetails' %}">View Post</a>
+        <a class="btn btn-primary" href="{% url 'productDetails' product_id=i.product_id %}">View Post</a>
       </td>
       </tr>
       </tbody>
