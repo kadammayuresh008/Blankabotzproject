@@ -7,8 +7,25 @@ buyrentchoices
 
 <br>
 <div class="container">
-    <div class="text-right">
-        <a href="{% url 'buyrent' %}" class="btn btn-primary">Choose category</a>
+    <div class="row">
+        <div class="col-sm-7"></div>
+        <div class="col-sm-3 ml-3">
+        <form method="POST" action="filterpost">
+            {% csrf_token %}
+            <!-- <label class="my-1 mr-2" for="inlineFormCustomSelectPref">Filter by:</label> -->
+            <select class="custom-select my-1 " name="postchoice" id="postchoice" onchange='this.form.submit()' style=" Border: none">
+                <option value="selected"><b>Please select option</b></option>
+                <option value="phtl"><b>Price:High to Low</b></option>
+                <option value="plth"><b>Price:Low to High</b></option>
+                <option value="lo"><b>Distance</b></option>
+              </select>
+              <input type="hidden" id="category" name="category" value="{{product.0.product_category}}">
+              <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
+        </form>
+    </div>
+    <div class="col-sm-1 ml-3">
+        <a href="{% url 'buyrent' %}" class="btn btn-primary ">Choose category</a>
+    </div>
     </div>
     <h2>{{product.0.product_category}}</h2>
 <div class="row">

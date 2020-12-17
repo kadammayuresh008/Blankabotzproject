@@ -131,6 +131,7 @@ def buyrent(request):
             continue
     parameter = {'choices':choices}
     return render(request, "buyrent.html",parameter)
+    
 
 
 def buyrentchoice(request):
@@ -144,6 +145,7 @@ def buyrentchoice(request):
     else:
         messages.error(request, "Choice not selected")
         return HttpResponseRedirect(request.META.get('HTTP_REFERER')) 
+    return  HttpResponse('Choice page')
 
 
 def userpost(request):
@@ -152,7 +154,7 @@ def userpost(request):
     return render(request, "userpost.html",parameter)
 
 
-def deletepost(request):
+def deletepostmutiple(request):
     if request.method == 'POST':
         ans= request.POST.getlist('checkbox')
         if(len(ans)>0):
@@ -179,3 +181,32 @@ def deletepost(request,product_id):
     parameter = {'product':products}
     messages.success(request, "Product deleted successfully.")
     return render(request, "userpost.html",parameter)
+
+def filterpost(request):
+    if(request.method=='POST'):
+        choice= request.POST.getlist('postchoice')
+        category = request.POST.get('category')
+        print(category)
+        if(choice[0] == 'phtl'):
+            products = Product.objects.filter(product_category=category).order_by('product_price').reverse()
+            n= len(products)
+            nSlides = n//4 + math.ceil((n/4) + (n//4))
+            parameter = {'no_of_slides':nSlides, 'range':range(1, nSlides), 'product': products}
+            return render(request, "buyrentchoices.html",parameter)
+        elif(choice[0] == 'plth'):
+            products = Product.objects.filter(product_category=category).order_by('product_price')
+            n= len(products)
+            nSlides = n//4 + math.ceil((n/4) + (n//4))
+            parameter = {'no_of_slides':nSlides, 'range':range(1, nSlides), 'product': products}
+            return render(request, "buyrentchoices.html",parameter)
+        elif(choice[0] == 'lo'):
+            # for time been the location is static ###################################################################
+            products = Product.objects.filter(product_category=category).filter(product_location__icontains='Panvel')
+            n= len(products)
+            nSlides = n//4 + math.ceil((n/4) + (n//4))
+            parameter = {'no_of_slides':nSlides, 'range':range(1, nSlides), 'product': products}
+            return render(request, "buyrentchoices.html",parameter)
+        else:
+            messages.error(request, "Select the option")
+            return  HttpResponse('Filtered Post') 
+    return  HttpResponse('Filtered Post') 
