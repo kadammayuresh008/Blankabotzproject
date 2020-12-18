@@ -8,6 +8,7 @@ postadd
 {% block content %}
 <div class="container col-sm-4 mt-3">
     <h1>Add Post</h1>
+    <p></p>
     <form action="/post" method="POST" autocomplete="on" enctype='multipart/form-data'>
         {% csrf_token %}
     <div class="form-group">
@@ -26,10 +27,10 @@ postadd
         <label for="description">Product description</label>
         <input type="Text" class="form-control" id="description" name="description" placeholder="Enter description" required>
       </div>
-      <!-- <div class="form-group">
+      <div class="form-group">
         <label for="location">Product location</label>
         <input type="Text" class="form-control" id="location" name="location" placeholder="Enter location" required>
-      </div> -->
+      </div>
         <div class="form-group text-center">
         <button class="btn btn-primary" onclick="getLocation()">Get Location</button>
            </div>

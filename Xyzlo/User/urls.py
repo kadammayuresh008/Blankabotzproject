@@ -18,4 +18,6 @@ urlpatterns = [
     path('productdetails/<product_id>',views.productDetails, name="productDetails"),
     path('deletepost/<product_id>',views.deletepost, name="deletepost"),
     path('buyrent/buyrentchoice/filterpost', views.filterpost ,name="filterpost"),
+    path('editpost/<product_id>',views.editpost, name="editpost"),
+    path('edit_post/<product_id>', views.edit_post , name="edit_post"),
 ]

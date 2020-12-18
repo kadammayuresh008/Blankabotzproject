@@ -80,7 +80,9 @@ def handlelogout(request):
 
 @login_required
 def addpost(request):
-    return render(request, "postadd.html")
+    products = Product.objects.filter(pro_email=request.user)
+    parameter = {'product':products}
+    return render(request, "postadd.html", parameter)
 
 
 def post(request):
@@ -210,3 +212,33 @@ def filterpost(request):
             messages.error(request, "Select the option")
             return  HttpResponse('Filtered Post') 
     return  HttpResponse('Filtered Post') 
+
+def editpost(request,product_id):
+    products = Product.objects.filter(product_id=product_id)
+    parameter = {'product':products}
+    return render(request, "editpost.html", parameter)
+
+def edit_post(request, product_id):
+    if request.method == 'POST':
+        product_name = request.POST.get('Name')
+        product_price = request.POST.get('Price')
+        product_category = request.POST.get('Category')
+        product_description = request.POST.get('description')
+        product_location = request.POST.get('location')
+        product_image = request.POST.get('image')
+
+        print(product_name,product_price,product_category,product_description,
+        product_location,product_image)
+
+        if(bool(re.search(r'\d', product_name))):
+            messages.error(request, "Name should not contain digits.")
+            return redirect("addpost")
+        else:
+            product = Product(product_id=product_id, product_name=product_name, product_price=product_price,
+            product_category=product_category, product_description=product_description,
+            product_location=product_location, product_image=product_image)
+            product.save()
+            messages.success(request, "Product edited successfully.")
+            return redirect("productDetails")
+    
+    return HttpResponse('Post Edited')
