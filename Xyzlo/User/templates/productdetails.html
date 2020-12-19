@@ -20,11 +20,17 @@ Productdetails
           <p class="card-text">{{product.0.product_category}}</p>
           <b class="card-title">Location</b>
           <p class="card-text">{{product.0.product_location}}</p>
+          {% if user == product.0.pro_email %}
           <div class="col-sm-12 text-center">
           <a href="{% url 'userpost' %}" class="btn btn-primary">Go Back</a>
           <a class="btn btn-primary" href="{% url 'editpost' product_id=product.0.product_id %}">Edit Post</a>
           <a class="btn btn-primary" href="{% url 'deletepost' product_id=product.0.product_id %}" style="background-color:darkred;">Delete Post</a>
         </div>
+        {% else %}
+        <div class="col-sm-12 text-center">
+          <a href="#" class="btn btn-primary">Pay</a>
+        </div>
+        {% endif %}
         </div>
       </div>
 </div>

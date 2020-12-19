@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <title>{% block title  %}
@@ -41,6 +42,10 @@ text-decoration: none;
   background-color: Blue;
 }
 
+.heart {
+  font-size: 15px;
+    color:black;
+}
 
 
 #output_image
@@ -49,9 +54,42 @@ text-decoration: none;
  border: 1px solid black;
  border-radius: 20px;
 }
+
+
+
+
+.photo > img {
+  object-fit: cover;
+  width: 100%;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-rows:375px;
+  grid-template-columns:auto auto;
+}
+
+.grid-container > div {
+  background-color: rgba(255, 255, 255, 0.8);
+  text-align: center;
+}
+
+
+
+
+
+
+
+
+
+
       </style>
       <script type='text/javascript'>
 
+        // heart javascript
+        // $(".heart.fa").click(function() {
+        //   $(this).toggleClass("fa-heart fa-heart-o");
+        // });
 
         function getLocation() {
         if (navigator.geolocation) {
@@ -80,16 +118,16 @@ text-decoration: none;
 
         var x = document.getElementById("demo");
       
-      
+     
         </script>
   </head>
   <body>
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <a class="navbar-brand" href="#">Xyzlo</a>
-      <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+      <a class="navbar-brand" href="{% url 'home' %}">Xyzlo</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
-      </button> -->
+      </button>
       {% if user.is_authenticated %}
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
@@ -109,7 +147,9 @@ text-decoration: none;
             <a class="nav-link" href="{% url 'handlelogout' %}">Logout</a>
           </li>
         </ul>
+      </div>
         {% else %}
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item active">
             <a class="nav-link" href="{% url 'login' %}">Login</a>
@@ -118,9 +158,8 @@ text-decoration: none;
             <a class="nav-link" href="{% url 'signup' %}">Signup</a>
           </li>
         </ul>
-        {% endif %}
-
       </div>
+        {% endif %}
     </nav>
     {% if messages %}
 <div class="messages">

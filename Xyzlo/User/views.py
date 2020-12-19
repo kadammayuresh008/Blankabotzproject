@@ -5,6 +5,7 @@ from User.models import Account ,Product
 from django.contrib.auth.decorators import login_required
 import re
 import math
+from django.db.models import Q
 
 def signuppage(request):
     return render(request, "signup.html")
@@ -139,11 +140,17 @@ def buyrent(request):
 def buyrentchoice(request):
     if request.method == 'POST':
         choice= request.POST.get('Choice')
-        products = Product.objects.filter(product_category=choice)
+        products=Product.objects.filter(~Q(pro_email = request.user)).filter(product_category=choice)
         n= len(products)
-        nSlides = n//4 + math.ceil((n/4) + (n//4))
-        parameter = {'no_of_slides':nSlides, 'range':range(1, nSlides), 'product': products}
-        return render(request, "buyrentchoices.html",parameter)
+        if(n>0):
+            nSlides = n//4 + math.ceil((n/4) + (n//4))
+            parameter = {'no_of_slides':nSlides, 'range':range(1, nSlides), 'product': products}
+            return render(request, "buyrentchoices.html",parameter)
+        else:
+            messages.success(request, "Nothing to show.")
+            nSlides = n//4 + math.ceil((n/4) + (n//4))
+            parameter = {'no_of_slides':nSlides, 'range':range(1, nSlides), 'product': products}
+            return render(request, "buyrentchoices.html",parameter)
     else:
         messages.error(request, "Choice not selected")
         return HttpResponseRedirect(request.META.get('HTTP_REFERER')) 
@@ -188,22 +195,22 @@ def filterpost(request):
     if(request.method=='POST'):
         choice= request.POST.getlist('postchoice')
         category = request.POST.get('category')
-        print(category)
+        products = Product.objects.filter(~Q(pro_email = request.user))
         if(choice[0] == 'phtl'):
-            products = Product.objects.filter(product_category=category).order_by('product_price').reverse()
+            products = products.filter(product_category=category).order_by('product_price').reverse()
             n= len(products)
             nSlides = n//4 + math.ceil((n/4) + (n//4))
             parameter = {'no_of_slides':nSlides, 'range':range(1, nSlides), 'product': products}
             return render(request, "buyrentchoices.html",parameter)
         elif(choice[0] == 'plth'):
-            products = Product.objects.filter(product_category=category).order_by('product_price')
+            products = products.filter(product_category=category).order_by('product_price')
             n= len(products)
             nSlides = n//4 + math.ceil((n/4) + (n//4))
             parameter = {'no_of_slides':nSlides, 'range':range(1, nSlides), 'product': products}
             return render(request, "buyrentchoices.html",parameter)
         elif(choice[0] == 'lo'):
             # for time been the location is static ###################################################################
-            products = Product.objects.filter(product_category=category).filter(product_location__icontains='Panvel')
+            products = products.filter(product_category=category).filter(product_location__icontains='Panvel')
             n= len(products)
             nSlides = n//4 + math.ceil((n/4) + (n//4))
             parameter = {'no_of_slides':nSlides, 'range':range(1, nSlides), 'product': products}
@@ -227,12 +234,13 @@ def edit_post(request, product_id):
         product_location = request.POST.get('location')
         product_image = request.POST.get('image')
 
-        print(product_name,product_price,product_category,product_description,
-        product_location,product_image)
+        # print(product_name,product_price,product_category,product_description,
+        # product_location,product_image)
 
-        if(bool(re.search(r'\d', product_name))):
-            messages.error(request, "Name should not contain digits.")
+        if(bool(re.search(r'\d', product_category))):
+            messages.error(request, "Category should not contain digits.")
             return redirect("addpost")
+
         else:
             product = Product(product_id=product_id, product_name=product_name, product_price=product_price,
             product_category=product_category, product_description=product_description,
@@ -242,3 +250,4 @@ def edit_post(request, product_id):
             return redirect("productDetails")
     
     return HttpResponse('Post Edited')
+
