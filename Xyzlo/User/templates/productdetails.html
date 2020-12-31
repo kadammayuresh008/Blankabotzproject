@@ -20,7 +20,7 @@ Productdetails
           <p class="card-text">{{product.0.product_category}}</p>
           <b class="card-title">Location</b>
           <p class="card-text">{{product.0.product_location}}</p>
-          {% if user == product.0.pro_email %}
+          {% if user.email == product.0.pro_email %}
           <div class="col-sm-12 text-center">
           <a href="{% url 'userpost' %}" class="btn btn-primary">Go Back</a>
           <a class="btn btn-primary" href="{% url 'editpost' product_id=product.0.product_id %}">Edit Post</a>

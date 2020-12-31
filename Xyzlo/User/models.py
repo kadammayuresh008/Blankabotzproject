@@ -76,7 +76,12 @@ class Account(AbstractBaseUser):
 
 
 class Product(models.Model):
-    pro_email = models.ForeignKey(Account, on_delete=models.CASCADE,default="")
+    # pro_email = models.ForeignKey(Account, on_delete=models.CASCADE,default="")
+    pro_email = models.EmailField(verbose_name="email", max_length=60,null=True)
+    productOnwer_name = models.CharField(verbose_name="name", max_length=70,null=True)
+    productOnwer_address = models.CharField(verbose_name="address", max_length=200,null=True)
+    productOnwer_bdate = models.DateField(verbose_name="Birthdate",null=True)
+    productOnwer_pnumber = PhoneNumberField(null=True)
     product_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False ,unique=True)
     product_image = models.ImageField(upload_to='product_images')
     product_name = models.CharField(verbose_name="product_name", max_length=70)

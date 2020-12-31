@@ -81,7 +81,7 @@ def handlelogout(request):
 
 @login_required
 def addpost(request):
-    products = Product.objects.filter(pro_email=request.user)
+    products = Product.objects.filter(pro_email=request.user.email)
     parameter = {'product':products}
     return render(request, "postadd.html", parameter)
 
@@ -93,10 +93,21 @@ def post(request):
         product_category = request.POST.get('Category')
         product_description = request.POST.get('description')
         product_location = request.POST.get('location')
-        product_image = request.POST.get('image')
+        product_image = request.FILES['image']
 
-        print(product_name,product_price,product_category,product_description,
-        product_location,product_image)
+        current_user=request.user 
+
+
+        pro_email = current_user.email
+        productOnwer_name = current_user.name
+        productOnwer_address = current_user.address
+        productOnwer_bdate = current_user.bdate
+        productOnwer_pnumber = current_user.pnumber
+
+
+        print("///////////////////////////////////////////")
+        print(product_image)
+        print("///////////////////////////////////////////")
 
         if(bool(re.search(r'\d', product_name))):
             messages.error(request, "Name should not contain digits.")
@@ -110,7 +121,9 @@ def post(request):
 
 
         else:
-            product = Product(product_name=product_name, product_price=product_price,
+            product = Product(pro_email=pro_email,productOnwer_name=productOnwer_name,
+            productOnwer_address=productOnwer_address,productOnwer_bdate=productOnwer_bdate,
+            productOnwer_pnumber=productOnwer_pnumber,product_name=product_name, product_price=product_price,
             product_category=product_category, product_description=product_description,
             product_location=product_location, product_image=product_image)
             # try:
@@ -140,7 +153,7 @@ def buyrent(request):
 def buyrentchoice(request):
     if request.method == 'POST':
         choice= request.POST.get('Choice')
-        products=Product.objects.filter(~Q(pro_email = request.user)).filter(product_category=choice)
+        products=Product.objects.filter(~Q(pro_email = request.user.email)).filter(product_category=choice)
         n= len(products)
         if(n>0):
             nSlides = n//4 + math.ceil((n/4) + (n//4))
@@ -158,7 +171,7 @@ def buyrentchoice(request):
 
 
 def userpost(request):
-    products = Product.objects.filter(pro_email=request.user)
+    products = Product.objects.filter(pro_email=request.user.email)
     parameter = {'product':products}
     return render(request, "userpost.html",parameter)
 
@@ -186,7 +199,7 @@ def productDetails(request,product_id):
 
 def deletepost(request,product_id):
     Product.objects.filter(product_id=product_id).delete()
-    products = Product.objects.filter(pro_email=request.user)
+    products = Product.objects.filter(pro_email=request.user.email)
     parameter = {'product':products}
     messages.success(request, "Product deleted successfully.")
     return render(request, "userpost.html",parameter)
@@ -195,7 +208,7 @@ def filterpost(request):
     if(request.method=='POST'):
         choice= request.POST.getlist('postchoice')
         category = request.POST.get('category')
-        products = Product.objects.filter(~Q(pro_email = request.user))
+        products = Product.objects.filter(~Q(pro_email = request.user.email))
         if(choice[0] == 'phtl'):
             products = products.filter(product_category=category).order_by('product_price').reverse()
             n= len(products)
@@ -234,8 +247,11 @@ def edit_post(request, product_id):
         product_location = request.POST.get('location')
         product_image = request.POST.get('image')
 
-        # print(product_name,product_price,product_category,product_description,
-        # product_location,product_image)
+
+        print("///////////////////////////////////////////")
+        print(product_image)
+        print("///////////////////////////////////////////")
+
 
         if(bool(re.search(r'\d', product_category))):
             messages.error(request, "Category should not contain digits.")
@@ -248,6 +264,5 @@ def edit_post(request, product_id):
             product.save()
             messages.success(request, "Product edited successfully.")
             return redirect("productDetails")
-    
     return HttpResponse('Post Edited')
 
