@@ -30,24 +30,32 @@ def signIn(request):
             messages.error(request, "Name should not contain digits.")
             return redirect("signup")
         else:
-            user = Account.objects.create_user(name=name, email=email, password=password, pnumber=pnumber,
-            address=address, bdate=date)
-            user.save()
+            userlist=Account.objects.filter(email=email)
+            if(len(userlist) == 1):
+                messages.error(request, "Xzylo Account with this email already exist.")
+                return redirect("signup")
+            else:
+                user = Account.objects.create_user(name=name, email=email, password=password, pnumber=pnumber,
+                address=address, bdate=date)
+                user.save()
 
-            messages.success(request, "Xzylo account successfully created.")
-            return redirect("login")
+                messages.success(request, "Xzylo account successfully created.")
+                return redirect("login")
     
     else:
         messages.error(request, "Xzylo account not successfully created.")
         return HttpResponse('404 - Not found')
 
 
-@login_required
+# @login_required
 def home(request):
+    if(str(request.user)=="AnonymousUser"):
+        return redirect('login')
+    else:
+        return render(request, "home.html")
     # if request.user.is_authenticated:
     #     return redirect("signup")
     # else:
-    return render(request, "home.html")
 
 @login_required
 def about(request):
@@ -104,10 +112,6 @@ def post(request):
         productOnwer_bdate = current_user.bdate
         productOnwer_pnumber = current_user.pnumber
 
-
-        print("///////////////////////////////////////////")
-        print(product_image)
-        print("///////////////////////////////////////////")
 
         if(bool(re.search(r'\d', product_name))):
             messages.error(request, "Name should not contain digits.")
