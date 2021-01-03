@@ -105,13 +105,11 @@ def post(request):
 
         current_user=request.user 
 
-
         pro_email = current_user.email
         productOnwer_name = current_user.name
         productOnwer_address = current_user.address
         productOnwer_bdate = current_user.bdate
         productOnwer_pnumber = current_user.pnumber
-
 
         if(bool(re.search(r'\d', product_name))):
             messages.error(request, "Name should not contain digits.")
@@ -120,9 +118,6 @@ def post(request):
         # # if(product_image==None):
         # #     messages.error(request, "Image field empty.")
         # #     return redirect("addpost")
-
-
-
 
         else:
             product = Product(pro_email=pro_email,productOnwer_name=productOnwer_name,
@@ -243,30 +238,26 @@ def editpost(request,product_id):
     return render(request, "editpost.html", parameter)
 
 def edit_post(request, product_id):
+    p = Product.objects.get(product_id=product_id)
     if request.method == 'POST':
-        product_name = request.POST.get('Name')
-        product_price = request.POST.get('Price')
-        product_category = request.POST.get('Category')
-        product_description = request.POST.get('description')
-        product_location = request.POST.get('location')
-        product_image = request.POST.get('image')
+        p.product_name = request.POST.get('Name')
+        p.product_price = request.POST.get('Price')
+        p.product_category = request.POST.get('Category')
+        p.product_description = request.POST.get('description')
+        p.product_location = request.POST.get('location')
+        p.product_image = request.FILES['image']
 
+        if(bool(re.search(r'\d', p.product_name))):
+            messages.error(request, "Name should not contain digits.")
+            return redirect("editpost", product_id=product_id)
 
-        print("///////////////////////////////////////////")
-        print(product_image)
-        print("///////////////////////////////////////////")
-
-
-        if(bool(re.search(r'\d', product_category))):
-            messages.error(request, "Category should not contain digits.")
-            return redirect("addpost")
+        if(p.product_category.isalpha() == False):
+            messages.error(request, "Category should only contain alphabets.")
+            return redirect("editpost", product_id=product_id)
 
         else:
-            product = Product(product_id=product_id, product_name=product_name, product_price=product_price,
-            product_category=product_category, product_description=product_description,
-            product_location=product_location, product_image=product_image)
-            product.save()
+            p.save()
             messages.success(request, "Product edited successfully.")
-            return redirect("productDetails")
+            return redirect("productDetails", product_id=product_id)
     return HttpResponse('Post Edited')
 
