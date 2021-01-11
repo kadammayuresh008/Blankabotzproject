@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get your location</title>
+    <script defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB5MzvShxRet4KVeXNEhvIAusCYtuEhNhU&callback=initMap">
+</script>
+<style>
+    #map{
+        width: 400px;
+        height: 400px;
+    }
+</style>
+<script type="text/javascript">
+    x=navigator.geolocation;
+    x.getCurrentPosition(success,failure);
+
+    function success(position){
+        var myLat = position.coords.latitude;
+        var myLong = position.coords.longitude;
+        var coords = new google.maps.LatLng(myLat,myLong);
+        var mapOptions = {
+            zoom: 20,
+            center: coords,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+        var marker = google.maps.Marker({map:map, position:coords});
+
+    }
+
+    function failure(){
+        console.log("Error has occured");
+    }
+</script>
+
+
+</head>
+<body>
+    <div id="map"></div>
+</body>
+</html>

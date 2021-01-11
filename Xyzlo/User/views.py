@@ -6,6 +6,12 @@ from django.contrib.auth.decorators import login_required
 import re
 import math
 from django.db.models import Q
+from django.contrib.sites.shortcuts import get_current_site
+from django.utils.encoding import force_bytes, force_text
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.template.loader import render_to_string
+from .tokens import account_activation_token
+from django.core.mail import EmailMessage
 
 def signuppage(request):
     return render(request, "signup.html")
@@ -20,7 +26,7 @@ def signIn(request):
         address = request.POST.get('Address')
         date = request.POST.get('Date')
         pnumber = request.POST.get('Pnumber')
-        email = request.POST.get('EmailId')
+        emailadd = request.POST.get('EmailId')
         password = request.POST.get('Password')
         cpassword = request.POST.get('CPassword')
         if(password != cpassword):
@@ -30,22 +36,51 @@ def signIn(request):
             messages.error(request, "Name should not contain digits.")
             return redirect("signup")
         else:
-            userlist=Account.objects.filter(email=email)
+            userlist=Account.objects.filter(email=emailadd)
             if(len(userlist) == 1):
                 messages.error(request, "Xzylo Account with this email already exist.")
                 return redirect("signup")
             else:
-                user = Account.objects.create_user(name=name, email=email, password=password, pnumber=pnumber,
+                user = Account.objects.create_user(name=name, email=emailadd, password=password, pnumber=pnumber,
                 address=address, bdate=date)
+                user.is_active = False
                 user.save()
-
-                messages.success(request, "Xzylo account successfully created.")
-                return redirect("login")
+                current_site = get_current_site(request)
+                # print(current_site)
+                message = render_to_string('acc_active_email.html', {
+                    'user':user, 
+                    'domain':current_site.domain,
+                    'uid':force_text(urlsafe_base64_encode(force_bytes(user.pk))),
+                    'token': account_activation_token.make_token(user),
+                })
+                mail_subject = 'Activate your Xyzlo account.'
+                to_email = emailadd
+                email = EmailMessage(mail_subject, message, to=[to_email])
+                email.send()
+                return HttpResponse('<h3>Please confirm your email address to complete the registration</h3>')
+                # messages.success(request, "Xzylo account successfully created.")
+                # return redirect("login")
     
     else:
         messages.error(request, "Xzylo account not successfully created.")
         return HttpResponse('404 - Not found')
 
+
+
+def activate(request, uidb64, token):
+    try:
+        uid = force_text(urlsafe_base64_decode(uidb64))
+        user = Account.objects.get(pk=uid)
+    except(TypeError, ValueError, OverflowError, user.DoesNotExist):
+        user = None
+    if user is not None and account_activation_token.check_token(user, token):
+        user.is_active = True
+        user.save()
+        login(request, user)
+        # return redirect('home')
+        return HttpResponse('Thank you for your email confirmation. Now you can login your account.')
+    else:
+        return HttpResponse('Activation link is invalid!')
 
 # @login_required
 def home(request):
@@ -69,15 +104,18 @@ def handlelogin(request):
     if request.method == 'POST':
         loginemail = request.POST.get('Email')
         loginpassword = request.POST.get('password')
+        print(loginemail,loginpassword)
         user = authenticate(email=loginemail, password=loginpassword)
-
-        if user is not None:
-            login(request, user)
-            messages.success(request, "Logged in successfully.")
-            return render(request, "home.html")
-        else:
-            messages.error(request, "Invalid credentials.")
-            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+        login(request, user)
+        print(user)
+        return render(request, "home.html")
+        # if user is not None:
+        #     # login(request, user)
+        #     messages.success(request, "Logged in successfully.")
+        #     return render(request, "home.html")
+        # else:
+        #     messages.error(request, "Invalid credentials.")
+        #     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
     return HttpResponse('handlelogin')
 
 
@@ -183,7 +221,7 @@ def deletepostmutiple(request):
                 x=ans[0]
                 ans.pop(0)
                 Product.objects.filter(product_id=x).delete()
-            messages.success(request, "Product deleted successfully.")
+            # messages.success(request, "Product deleted successfully.")
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
         else:
             messages.error(request, "Product not selected")
@@ -201,6 +239,7 @@ def deletepost(request,product_id):
     products = Product.objects.filter(pro_email=request.user.email)
     parameter = {'product':products}
     messages.success(request, "Product deleted successfully.")
+    # return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
     return render(request, "userpost.html",parameter)
 
 def filterpost(request):

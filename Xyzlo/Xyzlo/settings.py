@@ -54,6 +54,10 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.facebook',
     'allauth.socialaccount.providers.google',
 
+
+    #email verification
+    "verify_email",
+
 ]
 
 MIDDLEWARE = [
@@ -159,3 +163,15 @@ SITE_ID = 1
 # managing media
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
+
+
+
+# For email verification
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'xyzloblankabotz@gmail.com'
+EMAIL_HOST_PASSWORD = 'XyzloBlank123'
+EMAIL_PORT = 587
+
+
