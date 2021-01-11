@@ -14,6 +14,7 @@ urlpatterns = [
     path('post', views.post , name="post"),
     path('buyrent/buyrentchoice/', views.buyrentchoice, name="buyrentchoice"),
     path('userpost/',views.userpost ,name="userpost"),
+    path('deletepost/deletepostmutiple/',views.deletepostmutiple ,name="delete_userpost"),
     path('userpost/deletepostmutiple/',views.deletepostmutiple ,name="deletepostmutiple"),
     path('productdetails/<product_id>',views.productDetails, name="productDetails"),
     path('deletepost/<product_id>',views.deletepost, name="deletepost"),
