@@ -43,7 +43,9 @@ def signIn(request):
             else:
                 user = Account.objects.create_user(name=name, email=emailadd, password=password, pnumber=pnumber,
                 address=address, bdate=date)
-                user.is_active = False
+                # for email verification it is set to false.It is set temporary set to true for login to work
+                # before buying domain name.  
+                user.is_active = True   
                 user.save()
                 current_site = get_current_site(request)
                 # print(current_site)
@@ -105,17 +107,15 @@ def handlelogin(request):
         loginemail = request.POST.get('Email')
         loginpassword = request.POST.get('password')
         print(loginemail,loginpassword)
-        user = authenticate(email=loginemail, password=loginpassword)
-        login(request, user)
+        user = authenticate(request, email=loginemail, password=loginpassword)
         print(user)
-        return render(request, "home.html")
-        # if user is not None:
-        #     # login(request, user)
-        #     messages.success(request, "Logged in successfully.")
-        #     return render(request, "home.html")
-        # else:
-        #     messages.error(request, "Invalid credentials.")
-        #     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+        if user is not None:
+            login(request, user)
+            messages.success(request, "Logged in successfully.")
+            return render(request, "home.html")
+        else:
+            messages.error(request, "Invalid credentials.")
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
     return HttpResponse('handlelogin')
 
 
