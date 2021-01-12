@@ -106,9 +106,9 @@ def handlelogin(request):
     if request.method == 'POST':
         loginemail = request.POST.get('Email')
         loginpassword = request.POST.get('password')
-        print(loginemail,loginpassword)
+        # print(loginemail,loginpassword)
         user = authenticate(request, email=loginemail, password=loginpassword)
-        print(user)
+        # print(user)
         if user is not None:
             login(request, user)
             messages.success(request, "Logged in successfully.")
