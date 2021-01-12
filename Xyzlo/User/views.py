@@ -43,7 +43,7 @@ def signIn(request):
             else:
                 user = Account.objects.create_user(name=name, email=emailadd, password=password, pnumber=pnumber,
                 address=address, bdate=date)
-                user.is_active = False
+                user.is_active = True
                 user.save()
                 current_site = get_current_site(request)
                 # print(current_site)
