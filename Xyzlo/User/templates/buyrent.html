@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title%}
+buyrent
+{% endblock title %}
+
+
+{% block content %}
+
+<div class="container text-center mt-5">
+
+<form action="buyrentchoice/" method="POST">
+{% csrf_token %}
+<h3>What you want to buy/rent?</h3>
+<br>
+<div class="row">
+<div class="col-sm-3"></div>
+<div class="col-sm-6">
+<select name="Choice" id="Choice" class="form-select custom-select" aria-label="Default select example" >
+{% for i in choices %}
+<option value="{{i}}">{{i}}</option>
+{% endfor %}
+</select>
+</div>
+</div>
+<br>
+<button type="submit" class="btn btn-primary">Submit</button>
+</div>
+</form>
+  {% endblock content %}

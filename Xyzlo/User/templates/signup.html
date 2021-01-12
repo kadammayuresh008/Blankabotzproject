@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block title%}
+Signup
+{% endblock title %}
+
+
+{% block content %}
+<div class="container col-sm-4 mt-3">
+    <div class="text-center">
+        <h1>Signup</h1>
+        </div>
+    <form  action="signIn/" method ='POST' autocomplete="on">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="Name">Full Name</label>
+            <input type="Text" class="form-control" id="Name" name="Name" placeholder="Enter Name" required>
+          </div>
+          <div class="form-group">
+            <label for="Address">Address</label>
+            <textarea class="form-control" id="Address" name="Address" rows="4" placeholder="Enter Address" required></textarea>
+          </div>
+          
+          <div class="form-group">
+            <label for="Date">Enter your birthdate</label>
+            <input type="date" class="form-control" id="Date" name="Date" placeholder="25/09/2020" required>
+          </div>
+          <div class="form-group">
+            <label for="Pnumber">Phone Number</label>
+            <input type="tel" class="form-control" id="Pnumber" name="Pnumber" placeholder="Enter phone Number" required>
+          </div>
+          <!-- OTP SUBMIT -->
+          <!-- <div class="form-group text-right">
+            <button type="submit" class="btn btn-primary">Send OTP</button>
+          </div> -->
+          <!-- <div class="form-group">
+            <label for="exampleInputNumber1">Enter the OTP send to your phone</label>
+            <input type="text" class="form-control" id="exampleInputNumber1" placeholder="Enter OTP" required>
+          </div> -->
+        <div class="form-group">
+          <label for="EmailId">Email Id</label>
+          <input type="email" class="form-control" id="EmailId" name="EmailId" aria-describedby="emailHelp" placeholder="Enter email" required>
+        </div>
+        <div class="form-group">
+          <label for="Password">Enter Password</label>
+          <input type="password" class="form-control" id="Password" name="Password" placeholder="Enter Password" required>
+        </div>
+        <div class="form-group">
+            <label for="CPassword">Confirm Password</label>
+            <input type="password" class="form-control" id="CPassword" name="CPassword" placeholder="Confirm Password" required>
+          </div>
+          <div class="form-group text-center">
+        <button type="submit" class="btn btn-primary">SignIn Now</button>
+          </div>
+          <div class="form-group text-center">
+            <small>Already had an account?</small>
+            <a href="{% url 'login' %}">LogIn</a>
+              </div>
+      </form>
+
+</div>
+{% endblock content %}

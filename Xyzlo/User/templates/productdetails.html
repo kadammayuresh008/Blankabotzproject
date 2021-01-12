@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title%}
+Productdetails
+{% endblock title %}
+
+
+{% block content %}
+<div class="container">
+    <div class="row" style="width: 100%; margin: 10vh 0">
+        <img class=" col-sm-6" src="../../media/{{product.0.product_image}}" alt="Card image cap">
+        <div class="card col-sm-6" style="padding: 2vh; margin: 1vh 0 0 0">
+          <!-- <h5 class="card-title">Product Name</h5> -->
+          <h5 class="card-text">{{product.0.product_name}}</h5>
+          <!-- <h5 class="card-title">Product Price</h5> -->
+          <p class="card-text"><b>Rs.</b>{{product.0.product_price}}</p>
+          <b class="card-title">Description</b>
+          <p class="card-text">{{product.0.product_description}}</p>
+          <b class="card-title">Category</b>
+          <p class="card-text">{{product.0.product_category}}</p>
+          <b class="card-title">Location</b>
+          <p class="card-text">{{product.0.product_location}}</p>
+          {% if user.email == product.0.pro_email %}
+          <div class="col-sm-12 text-center">
+          <a href="{% url 'userpost' %}" class="btn btn-primary">Go Back</a>
+          <a class="btn btn-primary" href="{% url 'editpost' product_id=product.0.product_id %}">Edit Post</a>
+          <a class="btn btn-primary" href="{% url 'deletepost' product_id=product.0.product_id %}" style="background-color:darkred;">Delete Post</a>
+        </div>
+        {% else %}
+        <div class="col-sm-12 text-center">
+          <a href="#" class="btn btn-primary">Pay</a>
+        </div>
+        {% endif %}
+        </div>
+      </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% block title%}
+buyrentchoices
+{% endblock title %}
+{% block content %}
+
+<br>
+    <div class="row">
+        <div class="col-sm-7"></div>
+        <div class="col-sm-3 ml-3">
+        <form method="POST" action="filterpost">
+            {% csrf_token %}
+            <!-- <label class="my-1 mr-2" for="inlineFormCustomSelectPref">Filter by:</label> -->
+            <select class="custom-select my-1 " name="postchoice" id="postchoice" onchange='this.form.submit()' style=" Border: none">
+                <option value="selected"><b>Please select option</b></option>
+                <option value="phtl"><b>Price:High to Low</b></option>
+                <option value="plth"><b>Price:Low to High</b></option>
+                <option value="lo"><b>Distance</b></option>
+              </select>
+              <input type="hidden" id="category" name="category" value="{{product.0.product_category}}">
+              <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
+        </form>
+    </div>
+    <div class="col-sm-1 ml-3">
+        <a href="{% url 'buyrent' %}" class="btn btn-primary ">Choose category</a>
+    </div>
+    </div>
+    <div class="ml-3">
+        <h2>{{product.0.product_category}}</h2>
+    </div>
+    <div class="container-fluid">
+        <div class="row" id="products-list">
+            {% for i in product %}
+                <div class="col-6 col-sm-6 col-md-4 col-lg-3">
+            <div class="card" id="item" style="height: 65vh;">
+                    <div class="photo">
+                <img src='/media/{{i.product_image}}' class="card-img-top" alt="...">
+                    </div>
+                <div class="card-body">
+                    <div class="row">
+                    <h5 class="card-title" style="margin: 0 auto; padding: 0;">{{i.product_name}}</h5>
+                    <i class="heart fa fa-heart-o ml-auto"></i>
+                </div>
+                    <p class="card-text">{{i.product_description}}</p>
+                    <p class="card-text"><b>&#x20b9; </b>{{i.product_price}}</p>
+                    <div class="card-footer text-center" style="background-color: white; padding: 10px 0 0 0;"> 
+                    <a href="{% url 'productDetails' product_id=i.product_id %}" class="btn btn-primary btn-sm">Buy</a>
+                    <a href="#" class="btn btn-primary btn-sm">Rent</a>
+                    </div> 
+                </div>
+                </div>
+                </div>
+                {% endfor %}
+        </div>
+        <!-- <div class="item2">2</div>
+        <div class="item3">3</div>   -->
+      </div>
+<!-- <div class="row">
+{% for i in product %}
+    <div class="col-xs-3 col-sm-3 col-md-3" style="...">
+        <div class="card" style="width: 18rem;" >
+        <img src='/media/{{i.product_image}}' class="card-img-top" alt="..." style="height: 10rem;width: 18rem;">
+        <div class="card-body">
+            <div class="row">
+            <h5 class="card-title">{{i.product_name}}</h5>
+            <i class="heart fa fa-heart-o ml-auto"></i>
+        </div>
+            <p class="card-text">{{i.product_description}}</p>
+            <p class="card-text"><b>Rs.</b>{{i.product_price}}</p>
+            <div class="card-footer text-center" style="background-color: white;"> 
+            <a href="{% url 'productDetails' product_id=i.product_id %}" class="btn btn-primary">Buy</a>
+            <a href="#" class="btn btn-primary">Rent</a>
+            </div> 
+        </div>
+        </div>
+        </div>
+    {% if forloop.counter|divisibleby:4 and forloop.counter > 0 and not forloop.last %}
+             </div>
+             <br>
+             <div class="row">
+            {% endif%}
+        
+{% endfor %}
+</div> -->
+
+<br>
+{% endblock content %}
