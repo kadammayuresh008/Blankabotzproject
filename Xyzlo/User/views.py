@@ -43,13 +43,17 @@ def signIn(request):
             else:
                 user = Account.objects.create_user(name=name, email=emailadd, password=password, pnumber=pnumber,
                 address=address, bdate=date)
-                user.is_active = True
+                # for email verification it is set to false.It is set temporary set to true for login to work
+                # before buying domain name.  
+                user.is_active = False  
                 user.save()
-                current_site = get_current_site(request)
+                # current_site = get_current_site(request)
+                current_site = "http://xyzloenvaws.eba-hkmunesj.ap-south-1.elasticbeanstalk.com"
                 # print(current_site)
                 message = render_to_string('acc_active_email.html', {
                     'user':user, 
-                    'domain':current_site.domain,
+                    # 'domain':current_site.domain,
+                    'domain':current_site,
                     'uid':force_text(urlsafe_base64_encode(force_bytes(user.pk))),
                     'token': account_activation_token.make_token(user),
                 })
@@ -57,9 +61,7 @@ def signIn(request):
                 to_email = emailadd
                 email = EmailMessage(mail_subject, message, to=[to_email])
                 email.send()
-                return HttpResponse('<h3>Please confirm your email address to complete the registration</h3>')
-                # messages.success(request, "Xzylo account successfully created.")
-                # return redirect("login")
+                return HttpResponse('<h3>Verfication mail has been send.Please confirm your email address to complete the registration</h3>')
     
     else:
         messages.error(request, "Xzylo account not successfully created.")
@@ -76,9 +78,10 @@ def activate(request, uidb64, token):
     if user is not None and account_activation_token.check_token(user, token):
         user.is_active = True
         user.save()
-        login(request, user)
+        # login(request, user)
         # return redirect('home')
-        return HttpResponse('Thank you for your email confirmation. Now you can login your account.')
+        messages.success(request, "Thank you for your email confirmation.Xzylo account successfully created.Now you can login your account")
+        return redirect("login")
     else:
         return HttpResponse('Activation link is invalid!')
 
@@ -139,7 +142,12 @@ def post(request):
         product_category = request.POST.get('Category')
         product_description = request.POST.get('description')
         product_location = request.POST.get('location')
-        product_image = request.FILES['image']
+        # product_image = request.FILES[]
+        try:
+            files=request.FILES.getlist['files']
+            print(files)
+        except:
+            print("Not found")
 
         current_user=request.user 
 
@@ -149,27 +157,27 @@ def post(request):
         productOnwer_bdate = current_user.bdate
         productOnwer_pnumber = current_user.pnumber
 
-        if(bool(re.search(r'\d', product_name))):
-            messages.error(request, "Name should not contain digits.")
-            return redirect("addpost")
+        # if(bool(re.search(r'\d', product_name))):
+        #     messages.error(request, "Name should not contain digits.")
+        #     return redirect("addpost")
 
-        # # if(product_image==None):
-        # #     messages.error(request, "Image field empty.")
-        # #     return redirect("addpost")
+        # # # if(product_image==None):
+        # # #     messages.error(request, "Image field empty.")
+        # # #     return redirect("addpost")
 
-        else:
-            product = Product(pro_email=pro_email,productOnwer_name=productOnwer_name,
-            productOnwer_address=productOnwer_address,productOnwer_bdate=productOnwer_bdate,
-            productOnwer_pnumber=productOnwer_pnumber,product_name=product_name, product_price=product_price,
-            product_category=product_category, product_description=product_description,
-            product_location=product_location, product_image=product_image)
-            # try:
-            #     print(product.pro_email)
-            # except product.pro_email.DoesNotExist:
-            #     print("////////////////////////////")
-            product.save()
-            messages.success(request, "Product uploaded successfully.")
-            return redirect("home")
+        # else:
+        #     product = Product(pro_email=pro_email,productOnwer_name=productOnwer_name,
+        #     productOnwer_address=productOnwer_address,productOnwer_bdate=productOnwer_bdate,
+        #     productOnwer_pnumber=productOnwer_pnumber,product_name=product_name, product_price=product_price,
+        #     product_category=product_category, product_description=product_description,
+        #     product_location=product_location, product_image=product_image)
+        #     # try:
+        #     #     print(product.pro_email)
+        #     # except product.pro_email.DoesNotExist:
+        #     #     print("////////////////////////////")
+        #     product.save()
+        #     messages.success(request, "Product uploaded successfully.")
+        #     return redirect("home")
     
     return HttpResponse('postadded.')
 

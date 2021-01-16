@@ -25,29 +25,29 @@ a:active {
 text-decoration: none;
 }
 
-#wrapper
+/* #wrapper
 {
  text-align:center;
  margin:20 auto;
  padding:20px;
-}
+} */
 
 
-.custom-select {
+/* .custom-select {
   position: relative;
   font-family: Arial;
 }
 
 .select-selected {
   background-color: Blue;
-}
+} */
 
 .heart {
   font-size: 15px;
     color:black;
 }
 
-
+/* 
 #output_image
 {
  max-width:300px;
@@ -62,20 +62,38 @@ text-decoration: none;
   object-fit: cover;
   width: 100%;
   height: 25vh;
-}
+} */
 
 /* .container-fluid {
   display: grid;
   grid-template-columns:auto auto;
 } */
 
-.container-fluid > div {
+/* .container-fluid > div {
   background-color: rgba(255, 255, 255, 0.8);
   text-align: center;
+} */
+
+
+article {
+  width: 80%;
+  margin: auto;
+  margin-top: 10px;
 }
 
- 
+.thumbnail {
+  height: 100px;
+  width:50%;
+  margin: 10px;
+}
 
+
+
+ 
+input[type=file]
+{
+  /* opacity: 0.5; */
+}
 
 
       </style>
@@ -100,19 +118,49 @@ text-decoration: none;
       }
 
 
-        function preview_image(event) 
-        {
-         var reader = new FileReader();
-         reader.onload = function()
-         {
-          var output = document.getElementById('output_image');
-          output.src = reader.result;
-         }
-         reader.readAsDataURL(event.target.files[0]);
-        }
+        // function preview_image(event) 
+        // {
+        //  var reader = new FileReader();
+        //  reader.onload = function()
+        //  {
+        //   var output = document.getElementById('output_image');
+        //   output.src = reader.result;
+        //  }
+        //  reader.readAsDataURL(event.target.files[0]);
+        // }
 
-        var x = document.getElementById("demo");
+        // var x = document.getElementById("demo");
       
+
+
+        window.onload = function() {
+  //Check File API support
+  if (window.File && window.FileList && window.FileReader) {
+    var filesInput = document.getElementById("files");
+    filesInput.addEventListener("change", function(event) {
+      var files = event.target.files; //FileList object
+      var output = document.getElementById("result");
+      for (var i = 0; i < files.length; i++) {
+        var file = files[i];
+        //Only pics
+        if (!file.type.match('image'))
+          continue;
+        var picReader = new FileReader();
+        picReader.addEventListener("load", function(event) {
+          var picFile = event.target;
+          var div = document.createElement("div");
+          div.innerHTML = "<img class='thumbnail' style ='border-radius:20px; max-width:300px; border: 1px solid black;' src='" + picFile.result + "'" +
+            "title='" + picFile.name + "'/>";
+          output.insertBefore(div, null);
+        });
+        //Read the image
+        picReader.readAsDataURL(file);
+      }
+    });
+  } else {
+    console.log("Your browser does not support File API");
+  }
+}
      
         </script>
   </head>

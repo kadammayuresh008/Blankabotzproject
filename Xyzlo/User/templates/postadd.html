@@ -35,13 +35,25 @@ postadd
         <button class="btn btn-primary" onclick="getLocation()">Get Location</button>
            </div>
            <p id="demo"></p>
-      <label for="Image">Product Image</label>
-      <div id="wrapper" class="form-group">
+      
+      <!-- <div id="wrapper" class="form-group">
         <input type="file" name= "image" id="image" accept="image/*" required onchange="preview_image(event)" >
         <br>
         <br>
         <img id="output_image"/>
-       </div>
+       </div> -->
+       <div>
+        <label for="files">Product Images</label>
+      <input id='files' type='file' name="files" multiple style="color: blue;"/>
+      <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel" width="100px">
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <output id='result'/>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
        <div class="form-group text-center">
         <button type="submit" class="btn btn-primary">Add Post</button>
           </div>
