@@ -24,10 +24,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = '$rm83w)77cg4l%1txp-gxs)y7v5d&sy@b)8n8yzo+)yvgvv+bz'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ["http://xyzloenvaws.eba-hkmunesj.ap-south-1.elasticbeanstalk.com","*"] # only for debug purpose
-
+ALLOWED_HOSTS = [] # only for debug purpose
+# "http://xyzloenvaws.eba-hkmunesj.ap-south-1.elasticbeanstalk.com","*"
 
 # Application definition
 
@@ -158,7 +158,7 @@ STATIC_URL = '/static/'
 SITE_ID = 1
 
 
-# LOGIN_REDIRECT_URL = "home/"
+LOGIN_REDIRECT_URL = "/"
 
 # managing media
 MEDIA_URL = '/media/'
@@ -175,3 +175,9 @@ EMAIL_HOST_PASSWORD = 'XyzloBlank123'
 EMAIL_PORT = 587
 
 
+
+
+ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_AUTHENTICATION_METHOD = 'email'

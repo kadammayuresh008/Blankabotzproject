@@ -1,7 +1,7 @@
 from django.shortcuts import render,HttpResponse,redirect,HttpResponseRedirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from User.models import Account ,Product
+from User.models import Account ,Product ,Image
 from django.contrib.auth.decorators import login_required
 import re
 import math
@@ -12,6 +12,7 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.template.loader import render_to_string
 from .tokens import account_activation_token
 from django.core.mail import EmailMessage
+from django.forms import formset_factory
 
 def signuppage(request):
     return render(request, "signup.html")
@@ -109,16 +110,16 @@ def handlelogin(request):
         loginpassword = request.POST.get('password')
         print(loginemail,loginpassword)
         user = authenticate(email=loginemail, password=loginpassword)
-        login(request, user)
-        print(user)
-        return render(request, "home.html")
-        # if user is not None:
-        #     # login(request, user)
-        #     messages.success(request, "Logged in successfully.")
-        #     return render(request, "home.html")
-        # else:
-        #     messages.error(request, "Invalid credentials.")
-        #     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+        # login(request, user)
+        # print(user)
+        # return render(request, "home.html")
+        if user is not None:
+            login(request, user)
+            messages.success(request, "Logged in successfully.")
+            return render(request, "home.html")
+        else:
+            messages.error(request, "Invalid credentials.")
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
     return HttpResponse('handlelogin')
 
 
@@ -142,12 +143,18 @@ def post(request):
         product_category = request.POST.get('Category')
         product_description = request.POST.get('description')
         product_location = request.POST.get('location')
-        # product_image = request.FILES[]
-        try:
-            files=request.FILES.getlist['files']
-            print(files)
-        except:
-            print("Not found")
+        files=request.FILES.getlist('files')
+        display_image=files[0]
+        # # product_image = request.FILES[]
+        # try:
+        #     files=request.FILES.getlist('files')
+        #     print(files[0])
+        #     for i in range(1,len(files)):
+        #         print(files[i])
+        #     #     # a = Image(image=f)
+        #     #     print(f)
+        # except:
+        #     print("Not found")
 
         current_user=request.user 
 
@@ -157,27 +164,31 @@ def post(request):
         productOnwer_bdate = current_user.bdate
         productOnwer_pnumber = current_user.pnumber
 
-        # if(bool(re.search(r'\d', product_name))):
-        #     messages.error(request, "Name should not contain digits.")
-        #     return redirect("addpost")
+        if(bool(re.search(r'\d', product_name))):
+            messages.error(request, "Name should not contain digits.")
+            return redirect("addpost")
 
-        # # # if(product_image==None):
-        # # #     messages.error(request, "Image field empty.")
-        # # #     return redirect("addpost")
+        # # if(product_image==None):
+        # #     messages.error(request, "Image field empty.")
+        # #     return redirect("addpost")
 
-        # else:
-        #     product = Product(pro_email=pro_email,productOnwer_name=productOnwer_name,
-        #     productOnwer_address=productOnwer_address,productOnwer_bdate=productOnwer_bdate,
-        #     productOnwer_pnumber=productOnwer_pnumber,product_name=product_name, product_price=product_price,
-        #     product_category=product_category, product_description=product_description,
-        #     product_location=product_location, product_image=product_image)
-        #     # try:
-        #     #     print(product.pro_email)
-        #     # except product.pro_email.DoesNotExist:
-        #     #     print("////////////////////////////")
-        #     product.save()
-        #     messages.success(request, "Product uploaded successfully.")
-        #     return redirect("home")
+        else:
+            product = Product(pro_email=pro_email,productOnwer_name=productOnwer_name,
+            productOnwer_address=productOnwer_address,productOnwer_bdate=productOnwer_bdate,
+            productOnwer_pnumber=productOnwer_pnumber,product_name=product_name, product_price=product_price,
+            product_category=product_category, product_description=product_description,
+            product_location=product_location, product_image=display_image)
+            product.save()
+            for i in range(0,len(files)):
+                product_img=Image(product=product,image=files[i])
+                product_img.save()
+                print(files[i])
+            # try:
+            #     print(product.pro_email)
+            # except product.pro_email.DoesNotExist:
+            #     print("////////////////////////////")
+            messages.success(request, "Product uploaded successfully.")
+            return redirect("home")
     
     return HttpResponse('postadded.')
 
@@ -238,7 +249,8 @@ def deletepostmutiple(request):
     
 def productDetails(request,product_id):
     products = Product.objects.filter(product_id=product_id)
-    parameter = {'product':products}
+    images= Image.objects.filter(product_id=product_id)
+    parameter = {'product':products,'Images':images}
     return render(request, "productdetails.html",parameter)
 
 

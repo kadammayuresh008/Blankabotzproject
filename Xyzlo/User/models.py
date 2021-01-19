@@ -83,7 +83,7 @@ class Product(models.Model):
     productOnwer_bdate = models.DateField(verbose_name="Birthdate",null=True)
     productOnwer_pnumber = PhoneNumberField(null=True)
     product_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False ,unique=True)
-    product_image = models.ImageField(upload_to='product_images')
+    product_image = models.ImageField(blank=True,null=True)
     product_name = models.CharField(verbose_name="product_name", max_length=70)
     product_price = models.IntegerField(verbose_name="product_price")
     product_description = models.CharField(verbose_name="product_deascription", max_length=500)
@@ -95,5 +95,12 @@ class Product(models.Model):
     def __str__(self):
         return str(self.product_name)
 
+
+class Image(models.Model):
+    product=models.ForeignKey(Product, on_delete=models.CASCADE,default="")
+    image = models.ImageField(upload_to='product_images',blank=True)
+
+    def __str__(self):
+        return str(self.product.product_id)
 
 
