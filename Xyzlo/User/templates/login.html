@@ -2,45 +2,40 @@
 {% load socialaccount %}
 {% providers_media_js %}
 
-
-
-
 {% block title%}
 login
 {% endblock title %}
 
-
 {% block content %}
 <div class="container col-sm-4 mt-3">
-    <div class="text-center">
-    <h1>Login</h1>
-    </div>
-    <form action="handlelogin/" method="POST" autocomplete="off">
+    
+    <form class="login-form" action="handlelogin/" method="POST" autocomplete="off">
+      <div class="text-center">
+        <h1 class="login-title">Login</h1>
+        </div>
       {% csrf_token %}
         <div class="form-group">
-          <label for="exampleInputEmail1">Email Id</label>
-          <input type="email" class="form-control" id="exampleInputEmail1" Name="Email" aria-describedby="emailHelp" placeholder="Enter email" required>
+          <label for="exampleInputEmail1" class="login-label">Email Id</label>
+          <input type="email" class="form-control" id="exampleInputEmail1" Name="Email" aria-describedby="emailHelp" required>
         </div>
         <div class="form-group">
-          <label for="exampleInputPassword1">Enter Password</label>
-          <input type="password" class="form-control" id="exampleInputPassword1" Name="password" placeholder="Enter Password" required>
+          <label for="exampleInputPassword1" class="login-label">Password</label>
+          <input type="password" class="form-control" id="exampleInputPassword1" Name="password" required>
         </div>
         <!-- <p id="demo"></p> -->
           <div class="form-group text-center">
-        <button type="submit" class="btn btn-primary">Login</button>
+        <button type="submit" class="btn login-btn">Login</button>
           </div>
           <div class="form-group text-center">
-            <small>Need an account?</small>
+            <small>Don't have an account?</small>
             <a href="{% url 'signup' %}">Sign up</a>
               </div>
             <div class="row">
-              <div class="col-sm-3"></div>
-              <div class="col-sm-2 form-group text-center">
-                <button class="btn btn-primary"><a href="{% provider_login_url "google" %} " style="color:white">Google</a></button>
+              <div class="col-sm-6 form-group text-center">
+                <button class="btn google-btn"><a href="{% provider_login_url "google" %} ">Google</a></button>
                   </div>
-                  <div class="col-sm-1"></div>
-                  <div class=" col-sm-4 form-group text-center">
-                    <button class="btn btn-primary"><a href="{% provider_login_url "facebook" method="oauth2" %} " style="color:white">Facebook</a></button>
+                  <div class=" col-sm-6 form-group text-center">
+                    <button class="btn fb-btn"><a href="{% provider_login_url "facebook" method="oauth2" %} ">Facebook</a></button>
                     </div>
             </div>
       </form>

@@ -6,44 +6,44 @@ Edit Post
 
 
 {% block content %}
-<div class="container col-sm-4 mt-3">
-    <h1>Edit Post</h1>
-    <form action="/edit_post/{{product.0.product_id}}" method="POST" autocomplete="on" enctype='multipart/form-data'>
+<div class="container col-sm-5">
+    <h1 class="edit-title text-center">Edit Product</h1>
+    <form class="edit-form" action="/edit_post/{{product.0.product_id}}" method="POST" autocomplete="on" enctype='multipart/form-data'>
         {% csrf_token %}
     <div class="form-group">
-        <label for="Name">Product Name</label>
+        <label for="Name">Name</label>
         <input type="Text" class="form-control" id="Name" name="Name" value={{product.0.product_name}} required>
       </div>
       <div class="form-group">
-        <label for="Price">Product Price</label>
+        <label for="Price">Price</label>
         <input type="number" class="form-control" id="Price" name="Price" value={{product.0.product_price}} required>
       </div>
       <div class="form-group">
-        <label for="Category">Product Category</label>
+        <label for="Category">Category</label>
         <input type="Text" class="form-control" id="Category" name="Category" value={{product.0.product_category}} required>
       </div>
       <div class="form-group">
-        <label for="description">Product description</label>
+        <label for="description">Description</label>
         <input type="Text" class="form-control" id="description" name="description" value="{{product.0.product_description}}"" required>
       </div>
       <div class="form-group">
-        <label for="location">Product location</label>
+        <label for="location">Location</label>
         <input type="Text" class="form-control" id="location" name="location" value={{product.0.product_location}} required> 
       </div>
         <div class="form-group text-center">
-        <button class="btn btn-primary" onclick="getLocation()">Get Location</button>
+        <button class="btn loc-btn" onclick="getLocation()">Get Location</button>
            </div>
            <p id="demo"></p>
       <label for="Image">Product Image</label>
       <div id="wrapper" class="form-group">
         <input type="file" name= "image" id="image" accept="image/*" value=../../media/{{product.0.product_image}} required onchange="preview_image(event)" >
-        <br>
-        <br>
-        <img id="output_image"/ src="../../media/{{product.0.product_image}}">
-       </div>
+        <div class="img-div">
+        <img class="text-center" id="output_image"/ src="../../media/{{product.0.product_image}}">
+      </div> 
+      </div>
        <div class="form-group text-center">
-        <button type="submit" class="btn btn-primary">Edit Post</button>
-        <a href="{% url 'productDetails' product_id=product.0.product_id %}" class="btn btn-primary">Cancel</a>
+        <button type="submit" class="btn edit-btn">Edit Post</button>
+        <button type="submit" class="btn cancel-btn"><a href="{% url 'productDetails' product_id=product.0.product_id %}">Cancel</a></button>
           </div>
           </form>
 </div>

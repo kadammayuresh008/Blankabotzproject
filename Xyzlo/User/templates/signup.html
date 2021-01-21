@@ -1,4 +1,6 @@
 {% extends 'base.html' %}
+{% load socialaccount %}
+{% providers_media_js %}
 
 {% block title%}
 Signup
@@ -7,27 +9,27 @@ Signup
 
 {% block content %}
 <div class="container col-sm-4 mt-3">
-    <div class="text-center">
-        <h1>Signup</h1>
-        </div>
-    <form  action="signIn/" method ='POST' autocomplete="on">
+    <form class="login-form" action="signIn/" method ='POST' autocomplete="on">
+      <div class="text-center">
+          <h1 class="login-title">SignUp</h1>
+          </div>
         {% csrf_token %}
         <div class="form-group">
-            <label for="Name">Full Name</label>
-            <input type="Text" class="form-control" id="Name" name="Name" placeholder="Enter Name" required>
+            <label for="Name" class="login-label">Full Name</label>
+            <input type="Text" class="form-control" id="Name" name="Name" required>
           </div>
           <div class="form-group">
-            <label for="Address">Address</label>
-            <textarea class="form-control" id="Address" name="Address" rows="4" placeholder="Enter Address" required></textarea>
+            <label for="Address" class="login-label">Address</label>
+            <textarea class="form-control" id="Address" name="Address" rows="4" required></textarea>
           </div>
           
           <div class="form-group">
-            <label for="Date">Enter your birthdate</label>
-            <input type="date" class="form-control" id="Date" name="Date" placeholder="25/09/2020" required>
+            <label for="Date" class="login-label">Birthdate</label>
+            <input type="date" class="form-control" id="Date" name="Date" required>
           </div>
           <div class="form-group">
-            <label for="Pnumber">Phone Number</label>
-            <input type="tel" class="form-control" id="Pnumber" name="Pnumber" placeholder="Enter phone Number" required>
+            <label for="Pnumber" class="login-label">Phone Number</label>
+            <input type="tel" class="form-control" id="Pnumber" name="Pnumber" required>
           </div>
           <!-- OTP SUBMIT -->
           <!-- <div class="form-group text-right">
@@ -38,23 +40,32 @@ Signup
             <input type="text" class="form-control" id="exampleInputNumber1" placeholder="Enter OTP" required>
           </div> -->
         <div class="form-group">
-          <label for="EmailId">Email Id</label>
-          <input type="email" class="form-control" id="EmailId" name="EmailId" aria-describedby="emailHelp" placeholder="Enter email" required>
+          <label for="EmailId" class="login-label">Email Id</label>
+          <input type="email" class="form-control" id="EmailId" name="EmailId" aria-describedby="emailHelp" required>
         </div>
         <div class="form-group">
-          <label for="Password">Enter Password</label>
-          <input type="password" class="form-control" id="Password" name="Password" placeholder="Enter Password" required>
+          <label for="Password" class="login-label">Enter Password</label>
+          <input type="password" class="form-control" id="Password" name="Password" required>
         </div>
         <div class="form-group">
-            <label for="CPassword">Confirm Password</label>
-            <input type="password" class="form-control" id="CPassword" name="CPassword" placeholder="Confirm Password" required>
+            <label for="CPassword" class="login-label">Confirm Password</label>
+            <input type="password" class="form-control" id="CPassword" name="CPassword" required>
           </div>
           <div class="form-group text-center">
-        <button type="submit" class="btn btn-primary">SignIn Now</button>
+        <button type="submit" class="btn login-btn">SignUp</button>
           </div>
           <div class="form-group text-center">
-            <small>Already had an account?</small>
+            <small>Already have an account?</small>
             <a href="{% url 'login' %}">LogIn</a>
+              </div>
+
+              <div class="row">
+                <div class="col-sm-6 form-group text-center">
+                  <button class="btn google-btn"><a href="{% provider_login_url 'google' %} ">Google</a></button>
+                    </div>
+                    <div class=" col-sm-6 form-group text-center">
+                      <button class="btn fb-btn"><a href="{% provider_login_url 'facebook' method='oauth2' %} ">Facebook</a></button>
+                      </div>
               </div>
       </form>
 
