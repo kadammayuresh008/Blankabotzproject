@@ -5,26 +5,17 @@ userpost
 {% endblock title %}
 {% block content %}
 <div class="container">
-<h1>Your Post</h1>
-<br>
-<div class="container-fluid">
+<h1 class="text-center post-title">My Products</h1>
+<div class="container-fluid post-table">
   <table class="table">
     <thead>
       <tr class="d-flex">
-    <th class="col-1"></th>
-<th class="col-3">
-    <b>Product Image</b>
-</th>
-  <th class="col-2">
-    <b>Product Name</b>
-  </th>
-  <th class="col-2">
-    <b>Product Price</b>
-  </th>
-  <th class="col-2">
-    <b>Product Category</b>
-  </th>
-  <th class="col-2"></th>
+    <th class="col-2 text-center"></th>
+<th class="col-2 text-center">Image</th>
+  <th class="col-2 text-center">Name</th>
+  <th class="col-2 text-center">Category</th>
+  <th class="col-2 text-center">Price</th>
+  <th class="col-2 text-center"></th>
   </tr>
   </thead>
 <form action="deletepostmutiple/" method="POST" autocomplete="off">
@@ -33,23 +24,23 @@ userpost
 {% for i in product %}
 <tbody>
     <tr class="d-flex">
-      <td class="col-1">
+      <td class="col-2 text-center text-td">
         <input type="checkbox" name="checkbox" id="option{{i.product_id}}" value="{{i.product_id}}">
       </td>
-    <td class="col-3">
+    <td class="col-2 text-center">
         <img src="/media/{{i.product_image}}" class="rounded" alt="Image not found" style="height: 5rem;width: 5rem;">
     </td>
-      <td class="col-2">
+      <td class="col-2 text-center text-td">
         {{i.product_name}}
       </td>
-      <td class="col-2">
+      <td class="col-2 text-center text-td">
         <b>Rs. </b>{{i.product_price}}
       </td>
-      <td class="col-2">
+      <td class="col-2 text-center text-td">
         {{i.product_category}}
       </td>
-      <td class="col-2">
-        <a class="btn btn-primary" href="{% url 'productDetails' product_id=i.product_id %}">View Post</a>
+      <td class="col-2 text-center">
+        <a class="btn view-btn" href="{% url 'productDetails' product_id=i.product_id %}">View Post</a>
       </td>
       </tr>
       </tbody>
@@ -57,7 +48,7 @@ userpost
 <br>
 <tr>
 <td class="form-group text-center col-12">
-  <button type="submit" class="btn" style="background-color:darkred;">Delete Post</button>
+  <button type="submit" class="btn dlt-btn">Delete Post</button>
 </td>
     </tr>
     {% endif %}
