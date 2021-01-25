@@ -4,7 +4,7 @@ from User.models import Product,Image
 # Register your models here.
 
 class AccountA(admin.ModelAdmin):
-    list_display = ('name', 'email', 'bdate', 'address', 'pnumber')
+    list_display = ('name', 'email','address', 'pnumber')
     list_filter = ('email', 'name', )
 
 
