@@ -161,7 +161,7 @@ def post(request):
         pro_email = current_user.email
         productOnwer_name = current_user.name
         productOnwer_address = current_user.address
-        productOnwer_bdate = current_user.bdate
+        # productOnwer_bdate = current_user.bdate
         productOnwer_pnumber = current_user.pnumber
 
         if(bool(re.search(r'\d', product_name))):
@@ -174,7 +174,7 @@ def post(request):
 
         else:
             product = Product(pro_email=pro_email,productOnwer_name=productOnwer_name,
-            productOnwer_address=productOnwer_address,productOnwer_bdate=productOnwer_bdate,
+            productOnwer_address=productOnwer_address,
             productOnwer_pnumber=productOnwer_pnumber,product_name=product_name, product_price=product_price,
             product_category=product_category, product_description=product_description,
             product_location=product_location, product_image=display_image)

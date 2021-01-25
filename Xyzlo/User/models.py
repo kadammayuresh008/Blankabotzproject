@@ -50,7 +50,7 @@ class Account(AbstractBaseUser):
     email = models.EmailField(verbose_name="email", max_length=60, unique=True)
     name = models.CharField(verbose_name="name", max_length=70)
     address = models.CharField(verbose_name="address", max_length=200)
-    bdate = models.DateField(verbose_name="Birthdate")
+    bdate = models.DateField(verbose_name="Birthdate",null=True)
     pnumber = PhoneNumberField(null=True)
     date_joined	= models.DateTimeField(verbose_name='date joined', auto_now_add=True)
     last_login = models.DateTimeField(verbose_name='last login', auto_now=True)
@@ -60,12 +60,12 @@ class Account(AbstractBaseUser):
     is_superuser = models.BooleanField(default=False)
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['name', 'address', 'bdate', 'pnumber']
+    REQUIRED_FIELDS = ['name', 'address', 'pnumber']
 
     objects = AccountManager()
 
     def __str__(self):
-        return str(self.name)
+        return str(self.email)
 
     def has_perm(self, perm, obj=None):
         return self.is_admin
