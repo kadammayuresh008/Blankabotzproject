@@ -7,12 +7,11 @@ buyrent
 
 {% block content %}
 
-<div class="container text-center mt-5">
+<div class="container text-center">
 
-<form action="buyrentchoice/" method="POST">
+<form class="buyrent-form" action="buyrentchoice/" method="POST">
 {% csrf_token %}
-<h3>What you want to buy/rent?</h3>
-<br>
+<h3 class="buyrent-title">Choose a Category</h3>
 <div class="row">
 <div class="col-sm-3"></div>
 <div class="col-sm-6">
@@ -23,8 +22,7 @@ buyrent
 </select>
 </div>
 </div>
-<br>
-<button type="submit" class="btn btn-primary">Submit</button>
+<button type="submit" class="btn buyrent-btn">Submit</button>
 </div>
 </form>
   {% endblock content %}

@@ -6,9 +6,10 @@ Productdetails
 
 
 {% block content %}
-<div class="container">
-    <div class="row" style="width: 100%; margin: 10vh 0">
-      <div class="col-sm-6">
+<a href="{% url 'userpost' %}" class="back-btn"><i class="fa fa-arrow-left"></i></a>
+<div class="container product-details">
+    <div class="row" style="width: 100%; margin: 5vh 0">
+      <div class="col-sm-7">
       <div id="carouselExampleControls" class="carousel slide" data-ride="carousel" >
         <div class="carousel-inner">
           {% for i in Images%}
@@ -28,26 +29,23 @@ Productdetails
       </div>
     </div>
         <!-- <img class=" col-sm-6" src="../../media/{{Images.0.image}}" alt="Card image cap"> -->
-        <div class="card col-sm-6" style="padding: 2vh; margin: 1vh 0 0 0">
+        <div class="card col-sm-5 details">
           <!-- <h5 class="card-title">Product Name</h5> -->
-          <h5 class="card-text">{{product.0.product_name}}</h5>
+          <p class="card-text product-name">{{product.0.product_name}}</p>
           <!-- <h5 class="card-title">Product Price</h5> -->
-          <p class="card-text"><b>Rs.</b>{{product.0.product_price}}</p>
-          <b class="card-title">Description</b>
-          <p class="card-text">{{product.0.product_description}}</p>
-          <b class="card-title">Category</b>
-          <p class="card-text">{{product.0.product_category}}</p>
-          <b class="card-title">Location</b>
-          <p class="card-text">{{product.0.product_location}}</p>
+          <p class="card-text product-price"><i class="fa fa-inr"></i> {{product.0.product_price}}</p>
+          <!-- <b class="card-title">Description</b> -->
+          <p class="card-text product-desc">{{product.0.product_description}}</p>
+          <div class="card-title" style="margin-bottom: 1vh;"><span class="category">Category: </span><span class="card-text product-category">{{product.0.product_category}}</span></div>
+          <div class="card-title"><span class="location">Location: </span><span class="card-text product-location">{{product.0.product_location}}</span></div>
           {% if user.email == product.0.pro_email %}
           <div class="col-sm-12 text-center">
-          <a href="{% url 'userpost' %}" class="btn btn-primary">Go Back</a>
-          <a class="btn btn-primary" href="{% url 'editpost' product_id=product.0.product_id %}">Edit Post</a>
-          <a class="btn btn-primary" href="{% url 'deletepost' product_id=product.0.product_id %}" style="background-color:darkred;">Delete Post</a>
+          <a class="btn editpost-btn" href="{% url 'editpost' product_id=product.0.product_id %}">Edit Post</a>
+          <a class="btn dltpost-btn" href="{% url 'deletepost' product_id=product.0.product_id %}">Delete Post</a>
         </div>
         {% else %}
         <div class="col-sm-12 text-center">
-          <a href="#" class="btn btn-primary">Pay</a>
+          <a href="#" class="btn pay-btn">Pay</a>
         </div>
         {% endif %}
         </div>

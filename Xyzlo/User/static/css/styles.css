@@ -92,7 +92,7 @@ text-decoration: none;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 50px;
     margin-bottom: 5vh;
-    color:rgb(223, 126, 0);
+    color:rgb(253, 188, 10);
 }
 
 .hr {
@@ -229,6 +229,167 @@ text-decoration: none;
     margin-top: 0;
 }
 
+.buyrent-form {
+    padding: 2vh 4vh;
+    margin-top: 5vh;
+    margin-bottom: 2vh;
+}
+
+.buyrent-title {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0 0 5vh 0;
+    color:rgb(253, 188, 10);
+}
+
+.buyrent-form select {
+    border-radius: 2vh;
+    background-color: rgb(221, 221, 221);
+    height: 7vh;
+}
+
+.buyrent-btn {
+    background-color: rgb(241, 208, 16);
+    margin-top: 3vh;
+}
+
+.back-btn {
+    font-size: 25px;
+    color: rgb(143, 143, 143);
+    margin: 3vh;
+}
+
+.back-btn:hover {
+    color: black;
+}
+
+.product-details {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.product-details img {
+    height: 55vh;
+    background-size: cover;
+    object-fit: cover;
+    cursor: pointer;
+    background-repeat: no-repeat;
+    transition: 0.3s;
+}
+
+.product-details img:hover {
+    opacity: 0.8;
+}
+
+.details {
+    border: 0.3vh solid rgb(241, 181, 16);
+    border-radius: 1vh;
+}
+
+.product-name {
+    font-size: 25px;
+}
+
+.product-price {
+    font-size: 25px;
+}
+
+.product-desc {
+    font-size: 17px;
+    margin-bottom: 1vh;
+}
+
+.location, .category {
+    font-style: bold;
+    font-size: 21px;
+}
+
+.product-location, .product-category {
+    font-size: 18px;
+}
+
+.editpost-btn, .dltpost-btn, .pay-btn {
+    background-color: rgb(241, 208, 16);
+    color: black;
+    margin-top: 4vh;
+}
+
+.editpost-btn:hover, .dltpost-btn:hover, .pay-btn:hover {
+    color: black;
+}
+
+.options {
+    margin-top: 5vh;
+}
+
+.choices-title {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 40px;
+    margin-top: 4vh;
+    color:rgb(253, 188, 10);
+    text-align: center;
+}
+
+.choices-form select {
+    border-radius: 2vh;
+    background-color: rgb(221, 221, 221);
+    height: 7vh;
+    margin-right: 1vh;
+}
+
+.products-list {
+    margin: 3vh 2vh;
+}
+
+.product {
+    height: 50vh;
+}
+
+.product img {
+    display: block;
+    margin-right: auto;
+    margin-left: auto;
+    width: 100%;
+    height: 25vh;
+    background-size: cover;
+    object-fit: cover;
+    cursor: pointer;
+    background-repeat: no-repeat;
+    transition: 0.3s;
+}
+
+.product img:hover {
+    opacity: 0.7;
+}
+
+.prod-name {
+    font-family: Bahnschrift;
+    font-size: 20px;
+    margin-bottom: 0;
+}
+
+.heart {
+    font-size: 15px;
+    color:black;
+    margin-top: 1vh;
+}
+
+.prod-price {
+    font-size: 19px;;
+}
+
+.prod-desc {
+    font-size: 16px;
+    margin-bottom: 2vh;
+}
+
+.buyprod-btn, .rentprod-btn {
+    background-color: rgb(241, 208, 16);
+    color: black;
+}
+
+.buyprod-btn:hover, .rentprod-btn:hover {
+    color: black;
+}
+
 /* #wrapper
 {
     text-align:center;
@@ -245,11 +406,6 @@ text-decoration: none;
 .select-selected {
     background-color: Blue;
 } */
-
-.heart {
-    font-size: 15px;
-    color:black;
-}
 
 /* 
 #output_image

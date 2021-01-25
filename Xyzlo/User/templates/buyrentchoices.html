@@ -5,11 +5,13 @@ buyrentchoices
 {% endblock title %}
 {% block content %}
 
-<br>
     <div class="row">
-        <div class="col-sm-7"></div>
-        <div class="col-sm-3 ml-3">
-        <form method="POST" action="filterpost">
+        <div class="col-sm-1">
+        <a href="{% url 'buyrent' %}" class="btn back-btn"><i class="fa fa-arrow-left"></i></a>
+        </div>
+        <div class="col-sm-7 choices-title">{{product.0.product_category}}</div>
+        <div class="options col-sm-4">
+        <form class="choices-form" method="POST" action="filterpost">
             {% csrf_token %}
             <!-- <label class="my-1 mr-2" for="inlineFormCustomSelectPref">Filter by:</label> -->
             <select class="custom-select my-1 " name="postchoice" id="postchoice" onchange='this.form.submit()' style=" Border: none">
@@ -22,32 +24,27 @@ buyrentchoices
               <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
         </form>
     </div>
-    <div class="col-sm-1 ml-3">
-        <a href="{% url 'buyrent' %}" class="btn btn-primary ">Choose category</a>
-    </div>
-    </div>
-    <div class="ml-3">
-        <h2>{{product.0.product_category}}</h2>
     </div>
     <div class="container-fluid">
-        <div class="row" id="products-list">
+        <div class="row products-list">
             {% for i in product %}
                 <div class="col-6 col-sm-6 col-md-4 col-lg-3">
-            <div class="card" id="item" style="height: 65vh;">
+            <div class="card product">
                     <div class="photo">
                 <img src='/media/{{i.product_image}}' class="card-img-top" alt="...">
                     </div>
                 <div class="card-body">
                     <div class="row">
-                    <h5 class="card-title" style="margin: 0 auto; padding: 0;">{{i.product_name}}</h5>
-                    <i class="heart fa fa-heart-o ml-auto"></i>
+                    <h5 class="card-title col-sm-10 prod-name">{{i.product_name}}</h5>
+                    <i class="heart fa fa-heart-o ml-auto col-sm-2"></i>
                 </div>
-                    <p class="card-text">{{i.product_description}}</p>
-                    <p class="card-text"><b>&#x20b9; </b>{{i.product_price}}</p>
+                    <div class="card-text prod-price">&#x20b9; {{i.product_price}}</div>
+                    <div class="card-text prod-desc">{{i.product_description}}</div>
                     <div class="card-footer text-center" style="background-color: white; padding: 10px 0 0 0;"> 
-                    <a href="{% url 'productDetails' product_id=i.product_id %}" class="btn btn-primary btn-sm">Buy</a>
-                    <a href="#" class="btn btn-primary btn-sm">Rent</a>
+                    <a href="{% url 'productDetails' product_id=i.product_id %}" class="btn buyprod-btn">Buy</a>
+                    <a href="#" class="btn rentprod-btn">Rent</a>
                     </div> 
+               
                 </div>
                 </div>
                 </div>
