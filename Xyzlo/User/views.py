@@ -13,6 +13,7 @@ from django.template.loader import render_to_string
 from .tokens import account_activation_token
 from django.core.mail import EmailMessage
 from django.forms import formset_factory
+from Xyzlo.settings import ALLOWED_HOSTS
 
 def signuppage(request):
     return render(request, "signup.html")
@@ -48,8 +49,8 @@ def signIn(request):
                 # before buying domain name.  
                 user.is_active = False  
                 user.save()
-                # current_site = get_current_site(request)
-                current_site = "http://xyzloenvaws.eba-hkmunesj.ap-south-1.elasticbeanstalk.com"
+                current_site = "http://"+ALLOWED_HOSTS[0]
+                # current_site = "http://XYZLOawsenv.eba-srdsknxu.ap-south-1.elasticbeanstalk.com"
                 # print(current_site)
                 message = render_to_string('acc_active_email.html', {
                     'user':user, 
@@ -62,7 +63,8 @@ def signIn(request):
                 to_email = emailadd
                 email = EmailMessage(mail_subject, message, to=[to_email])
                 email.send()
-                return HttpResponse('<h3>Verfication mail has been send.Please confirm your email address to complete the registration</h3>')
+                messages.success(request,"Verfication mail has been send.Please confirm your email address to complete the registration",extra_tags="signupmsg")
+                return redirect("login")
     
     else:
         messages.error(request, "Xzylo account not successfully created.")
@@ -108,7 +110,7 @@ def handlelogin(request):
     if request.method == 'POST':
         loginemail = request.POST.get('Email')
         loginpassword = request.POST.get('password')
-        print(loginemail,loginpassword)
+        # print(loginemail,loginpassword)
         user = authenticate(email=loginemail, password=loginpassword)
         # login(request, user)
         # print(user)

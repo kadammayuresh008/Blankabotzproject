@@ -31,7 +31,9 @@ SECRET_KEY = '$rm83w)77cg4l%1txp-gxs)y7v5d&sy@b)8n8yzo+)yvgvv+bz'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['XYZLOawsenv.eba-srdsknxu.ap-south-1.elasticbeanstalk.com','*'] # only for debug purpose
+
+ALLOWED_HOSTS = ['127.0.0.1:8000']
+# ALLOWED_HOSTS = ['XYZLOawsenv.eba-srdsknxu.ap-south-1.elasticbeanstalk.com','*','127.0.0.1:8000'] # only for debug purpose
 # "http://xyzloenvaws.eba-hkmunesj.ap-south-1.elasticbeanstalk.com","*"
 
 # Application definition
