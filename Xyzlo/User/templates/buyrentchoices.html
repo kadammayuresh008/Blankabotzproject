@@ -7,9 +7,9 @@ buyrentchoices
 {% endblock title %}
 {% block content %}
 
-    <div class="row">
+    <div class="row choices-header">
         <div class="col-sm-1">
-        <a href="{% url 'buyrent' %}" class="btn back-btn"><i class="fa fa-arrow-left"></i></a>
+        <a href="{% url 'buyrent' %}" class="btn back-btn choicesback-btn"><i class="fa fa-arrow-left"></i></a>
         </div>
         <div class="col-sm-7 choices-title">{{product.0.product_category}}</div>
         <div class="options col-sm-4">
@@ -30,15 +30,14 @@ buyrentchoices
     <div class="container-fluid">
         <div class="row products-list">
             {% for i in product %}
-                <div class="col-6 col-sm-6 col-md-4 col-lg-3">
-            <div class="card product">
+            <div class="col-6 col-sm-6 col-md-4 col-lg-3 card product">
                     <div class="photo">
                 <img src='/media/{{i.product_image}}' class="card-img-top" alt="...">
                     </div>
-                <div class="card-body">
-                    <div class="row">
+                <div class="card-body product-card">
+                    <div class="row name-row">
                     <h5 class="card-title col-sm-10 prod-name">{{i.product_name}}</h5>
-                    <i class="heart fa fa-heart-o ml-auto col-sm-2"></i>
+                    <i class="heart fa fa-heart-o col-sm-2"></i>
                 </div>
                     <div class="card-text prod-price">&#x20b9; {{i.product_price}}</div>
                     <div class="card-text prod-desc">{{i.product_description}}</div>
@@ -46,8 +45,6 @@ buyrentchoices
                     <a href="{% url 'productDetails' product_id=i.product_id %}" class="btn buyprod-btn">Buy</a>
                     <a href="#" class="btn rentprod-btn">Rent</a>
                     </div> 
-               
-                </div>
                 </div>
                 </div>
                 {% endfor %}
