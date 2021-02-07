@@ -38,7 +38,7 @@ Edit Post
            <p id="demo"></p>
       <label for="Image">Product Image</label>
       <div id="wrapper" class="form-group">
-        <input type="file" name= "image" id="image" accept="image/*" value=../../media/{{product.0.product_image}} required onchange="preview_image(event)" >
+        <input class="img-input" type="file" name= "image" id="image" accept="image/*" value=../../media/{{product.0.product_image}} required onchange="preview_image(event)" >
         <div class="img-div">
         <img class="text-center" id="output_image"/ src="../../media/{{product.0.product_image}}">
       </div> 

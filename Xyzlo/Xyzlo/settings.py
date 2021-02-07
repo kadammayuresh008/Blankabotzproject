@@ -32,8 +32,7 @@ SECRET_KEY = '$rm83w)77cg4l%1txp-gxs)y7v5d&sy@b)8n8yzo+)yvgvv+bz'
 DEBUG = True
 
 
-ALLOWED_HOSTS = ['127.0.0.1:8000',"*"]
-# add the url host here while migrating at zeroth index
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 # ALLOWED_HOSTS = ['XYZLOawsenv.eba-srdsknxu.ap-south-1.elasticbeanstalk.com','*','127.0.0.1:8000'] # only for debug purpose
 # "http://xyzloenvaws.eba-hkmunesj.ap-south-1.elasticbeanstalk.com","*"
 
