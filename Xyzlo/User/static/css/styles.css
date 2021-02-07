@@ -1,5 +1,5 @@
 #navbar1 {
-    background-color: black !important;
+    background-color:#fbb335 !important;
     border-bottom: 2px solid #fbb335;
 }
 
@@ -390,7 +390,15 @@ text-decoration: none;
     color: black;
 }
 
-@media only screen and (max-width: 600px) {
+
+/* @media only screen and (max-width: 280px) {
+    .card{
+        background-color: black;
+    }
+
+} */
+
+@media only screen and (max-width: 600px ){
     .choices-form {
         margin: 2vh;
     }
@@ -471,6 +479,9 @@ text-decoration: none;
         color: black;
     }
     
+    .trow{
+        background-color: black;
+    }
 }
 
 /* #wrapper
@@ -529,3 +540,6 @@ article {
     width:50%;
     margin: 10px;
 }
+
+
+

@@ -15,8 +15,8 @@ userpost
     <th class="col-2 text-center"></th>
 <th class="col-2 text-center">Image</th>
   <th class="col-2 text-center">Name</th>
-  <th class="col-2 text-center">Category</th>
   <th class="col-2 text-center">Price</th>
+  <th class="col-2 text-center">Category</th>
   <th class="col-2 text-center"></th>
   </tr>
   </thead>
@@ -25,7 +25,7 @@ userpost
   {% if product %}
 {% for i in product %}
 <tbody>
-    <tr class="d-flex">
+    <tr class="d-flex trow">
       <td class="col-2 text-center text-td">
         <input type="checkbox" name="checkbox" id="option{{i.product_id}}" value="{{i.product_id}}">
       </td>
@@ -36,7 +36,7 @@ userpost
         {{i.product_name}}
       </td>
       <td class="col-2 text-center text-td">
-        <b>Rs. </b>{{i.product_price}}
+        &#x20b9;{{i.product_price}}
       </td>
       <td class="col-2 text-center text-td">
         {{i.product_category}}
