@@ -1,5 +1,5 @@
 #navbar1 {
-    background-color:#fbb335 !important;
+    background-color:black !important;
     border-bottom: 2px solid #fbb335;
 }
 
@@ -7,6 +7,8 @@
     font-size: 25px;
     padding: 0;
 }
+
+
 
 #navbar1 a {
     color: #fbb33d;
